@@ -40,6 +40,7 @@ namespace MobiBooking.Models
         public void Reserve(Room room)
         {
             bookedRooms.Add(room);
+
         }
     }
 }

@@ -26,6 +26,7 @@ namespace MobiBooking.Controllers
             return _iRepo.GetAll();
         }
 
+
         // GET: api/User/5
         [HttpGet("{id}", Name = "Get")]
         public User Get(int id)
@@ -33,6 +34,7 @@ namespace MobiBooking.Controllers
             return _iRepo.Get(id);
         }
         
+
         // POST: api/User
         [HttpPost]
         public void Post([FromBody]User user)
@@ -53,6 +55,6 @@ namespace MobiBooking.Controllers
         {
             return _iRepo.Delete(id);
         }
-        
+
     }
 }
