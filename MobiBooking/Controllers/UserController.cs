@@ -15,20 +15,14 @@ namespace MobiBooking.Controllers
     [Route("api/[controller]")]
     public class UserController : Controller
     {
-        //private IDataRepository<User, int> _repo;
+        private IUserRepository _repo;
 
-        //public UserController(IDataRepository<User, int> repo)
-        //{
-        //    _repo = repo;
-        //}
-
-        private UserManager _repo;
-        public UserController(UserManager repo)
+        public UserController(IUserRepository repo)
         {
             _repo = repo;
         }
 
-        //// GET: api/User
+        // GET: api/User
         //[HttpGet]
         //public IEnumerable<User> Get()
         //{
@@ -45,7 +39,7 @@ namespace MobiBooking.Controllers
         [HttpGet("{id}")]
         public User Get(int id)
         {
-            return _repo.Get(id);
+            return _repo.GetByID(id);
         }
         
 
@@ -65,9 +59,9 @@ namespace MobiBooking.Controllers
         
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public int Delete(int id)
+        public void Delete(int id)
         {
-            return _repo.Delete(id);
+            _repo.DeleteByID(id);
         }
 
     }

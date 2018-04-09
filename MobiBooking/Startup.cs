@@ -13,6 +13,7 @@ using MobiBooking.Models;
 using Microsoft.AspNetCore.Http;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using MobiBooking.Models.Repository;
 
 namespace MobiBooking
 {
@@ -28,10 +29,12 @@ namespace MobiBooking
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IUserRepository, UserRepository>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             services.AddDbContext<BookingDbContext>(opts =>
             //opts.UseSqlServer(Configuration["Data:MobiBookingDb:ConnectionString"]));
             opts.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
 
             services.AddMvc();
 
