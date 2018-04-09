@@ -30,13 +30,6 @@ namespace MobiBooking.Models
 		//public int amountsWeek_past { get; set; }
 		//public int amountMonth_past { get; set; }
 
-		public User(string login, string password, string email)
-		{
-			this.login = login;
-			this.password = password;
-			this.email = email;
-		}
-
 		//public void Reserve(Room room)
 		//{
 		//	bookedRooms.Add(room);

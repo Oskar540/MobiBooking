@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using MobiBooking.Models;
 using MobiBooking.Models.Repository;
 using Microsoft.AspNetCore.Authentication;
+using MobiBooking.Models.DataManager;
 
 namespace MobiBooking.Controllers
 {
@@ -14,25 +15,37 @@ namespace MobiBooking.Controllers
     [Route("api/[controller]")]
     public class UserController : Controller
     {
-        private IDataRepository<User, int> _Repo;
-        public UserController(IDataRepository<User, int> repo)
+        //private IDataRepository<User, int> _repo;
+
+        //public UserController(IDataRepository<User, int> repo)
+        //{
+        //    _repo = repo;
+        //}
+
+        private UserManager _repo;
+        public UserController(UserManager repo)
         {
-            _Repo = repo;
+            _repo = repo;
         }
 
-        // GET: api/User
+        //// GET: api/User
+        //[HttpGet]
+        //public IEnumerable<User> Get()
+        //{
+        //    return _repo.GetAll().OrderBy(c => c.name);
+        //}
+
         [HttpGet]
-        public IEnumerable<User> Get()
+        public string Get()
         {
-            return _Repo.GetAll().OrderBy(c => c.name);
+            return "Hello get";
         }
-
 
         // GET: api/User/5
         [HttpGet("{id}")]
         public User Get(int id)
         {
-            return _Repo.Get(id);
+            return _repo.Get(id);
         }
         
 
@@ -40,21 +53,21 @@ namespace MobiBooking.Controllers
         [HttpPost]
         public void Post([FromBody]User user)
         {
-            _Repo.Add(user);
+            _repo.Add(user);
         }
         
         // PUT: api/User/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]User user)
         {
-            _Repo.Update(user.Id, user);
+            _repo.Update(user.Id, user);
         }
         
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public int Delete(int id)
         {
-            return _Repo.Delete(id);
+            return _repo.Delete(id);
         }
 
     }

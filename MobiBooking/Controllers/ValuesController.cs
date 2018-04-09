@@ -3,12 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using MobiBooking.Models;
+using MobiBooking.Models.Repository;
+using MobiBooking.Models.DataManager;
+
 
 namespace WebApplication1.Controllers
 {
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
+        private UserManager _repo;
+
+        public ValuesController(UserManager repo)
+        {
+            _repo = repo;
+        }
+
+
         // GET api/values
         [HttpGet]
         public IEnumerable<string> Get()
