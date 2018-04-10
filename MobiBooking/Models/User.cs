@@ -14,10 +14,16 @@ namespace MobiBooking.Models
 		[Required]
 		public string login { get; set; }
 		[Required]
+		[DataType(DataType.Password)]
 		public string password { get; set; }
+		[Required]
+		[DataType(DataType.Password)]
+		[Compare("Password")]
+		public string confirmPassword { get; set; }
 		public string name { get; set; }
 		public string lastname { get; set; }
 		[Required]
+		[DataType(DataType.EmailAddress)]
 		public string email { get; set; }
 		//public propStatus epropStatus { get; set;}
 		//public List<Room> bookedRooms { get; set; }
@@ -29,11 +35,5 @@ namespace MobiBooking.Models
 		//public int amountMonth { get; set; }
 		//public int amountsWeek_past { get; set; }
 		//public int amountMonth_past { get; set; }
-
-		//public void Reserve(Room room)
-		//{
-		//	bookedRooms.Add(room);
-
-		//}
 	}
 }

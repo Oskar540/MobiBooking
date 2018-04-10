@@ -40,6 +40,7 @@ namespace MobiBooking.Models.Repository
             item.Id = id;
             _db.Users.Attach(item);
 
+
             //var user = _db.Users.FirstOrDefault(c => c.Id == id);
             //if (user == null) return;
 
@@ -55,15 +56,6 @@ namespace MobiBooking.Models.Repository
 
         public void DeleteByID(int id)
         {
-            //var user = _db.Users.FirstOrDefault(c => c.Id == id);
-            //_db.Users.Remove(user);
-
-            //User user = new User() { Id = id };
-            //_db.Users.Attach(user);
-            //_db.Users.Remove(user);
-            //_db.SaveChanges();
-
-
             try
             {
                 _db.Users.Remove(new User() { Id = id });
@@ -80,6 +72,18 @@ namespace MobiBooking.Models.Repository
                     throw ex;
                 }
             }
+
+
+
+            //var user = _db.Users.FirstOrDefault(c => c.Id == id);
+            //_db.Users.Remove(user);
+
+
+
+            //User user = new User() { Id = id };
+            //_db.Users.Attach(user);
+            //_db.Users.Remove(user);
+            //_db.SaveChanges();
 
         }
     }
