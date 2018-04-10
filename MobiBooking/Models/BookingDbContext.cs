@@ -28,5 +28,5 @@ namespace MobiBooking.Models
             
         }
     }
-
+    
 }

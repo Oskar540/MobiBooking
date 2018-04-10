@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MobiBooking.IdentityModels;
+using MobiBooking.Models.DataManager;
 
 namespace MobiBooking.Controllers
 {
@@ -59,5 +60,7 @@ namespace MobiBooking.Controllers
         public void Delete(int id)
         {
         }
+
+        
     }
 }

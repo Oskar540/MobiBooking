@@ -16,11 +16,11 @@ namespace MobiBooking.Models
 		[Required]
 		[DataType(DataType.Password)]
 		public string password { get; set; }
-		[Required]
-		[DataType(DataType.Password)]
-		[Compare("Password")]
-		public string confirmPassword { get; set; }
-		public string name { get; set; }
+        //[Required]
+        //[DataType(DataType.Password)]
+        //[Compare(nameof(password))]
+        //public string confirmPassword { get; set; }
+        public string name { get; set; }
 		public string lastname { get; set; }
 		[Required]
 		[DataType(DataType.EmailAddress)]

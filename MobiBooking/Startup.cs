@@ -45,46 +45,46 @@ namespace MobiBooking
 
             #region Identity
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-           .AddEntityFrameworkStores<BookingDbContext>()
-           .AddDefaultTokenProviders();
+           // services.AddIdentity<ApplicationUser, IdentityRole>()
+           //.AddEntityFrameworkStores<BookingDbContext>()
+           //.AddDefaultTokenProviders();
 
-            //        services.AddIdentity<ApplicationUser, IdentityRole>(options =>
-            //        {
-            //            // Password settings
-            //            options.Password.RequireDigit = true;
-            //            options.Password.RequiredLength = 8;
-            //            options.Password.RequiredUniqueChars = 2;
-            //            options.Password.RequireLowercase = true;
-            //            options.Password.RequireUppercase = true;
-            //            options.Password.RequireNonAlphanumeric = true;
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+                        // Password settings
+                        options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequiredUniqueChars = 2;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireNonAlphanumeric = true;
 
-            //            // Lockout settings
-            //            options.Lockout.AllowedForNewUsers = true;
-            //            options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-            //            options.Lockout.MaxFailedAccessAttempts = 5;
-
-
-            //            // SignIn settings
-            //            options.SignIn.RequireConfirmedEmail = true;
-            //            options.SignIn.RequireConfirmedPhoneNumber = false;
+                        // Lockout settings
+                        options.Lockout.AllowedForNewUsers = true;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.MaxFailedAccessAttempts = 5;
 
 
-            //        })
-            //.AddEntityFrameworkStores<BookingDbContext>()
-            //.AddDefaultTokenProviders();
+                        // SignIn settings
+                        options.SignIn.RequireConfirmedEmail = true;
+                options.SignIn.RequireConfirmedPhoneNumber = false;
 
-            //        services.ConfigureApplicationCookie(options =>
-            //        {
-            //            options.AccessDeniedPath = "/Account/AccessDenied";
-            //            options.Cookie.Name = "YourAppCookieName";
-            //            options.Cookie.HttpOnly = true;
-            //            options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
-            //            options.LoginPath = "/Account/Login";
-            //            // ReturnUrlParameter requires `using Microsoft.AspNetCore.Authentication.Cookies;`
-            //            options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
-            //            options.SlidingExpiration = true;
-            //        });
+
+            })
+    .AddEntityFrameworkStores<BookingDbContext>()
+    .AddDefaultTokenProviders();
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.AccessDeniedPath = "/Account/AccessDenied";
+                options.Cookie.Name = "MobiBookingCookie";
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+                options.LoginPath = "/Account/Login";
+                        // ReturnUrlParameter requires `using Microsoft.AspNetCore.Authentication.Cookies;`
+                        options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
+                options.SlidingExpiration = true;
+            });
             #endregion
         }
 
@@ -107,6 +107,7 @@ namespace MobiBooking
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
 
+            
 
             app.UseMvc();
         }
