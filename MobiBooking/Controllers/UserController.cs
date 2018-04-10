@@ -23,17 +23,17 @@ namespace MobiBooking.Controllers
         }
 
         // GET: api/User
-        //[HttpGet]
-        //public IEnumerable<User> Get()
-        //{
-        //    return _repo.GetAll().OrderBy(c => c.name);
-        //}
-
         [HttpGet]
-        public string Get()
+        public IEnumerable<User> Get()
         {
-            return "Hello get";
+            return _repo.GetAll().OrderBy(c => c.name);
         }
+
+        //[HttpGet]
+        //public string Get()
+        //{
+        //    return "Hello get";
+        //}
 
         // GET: api/User/5
         [HttpGet("{id}")]
