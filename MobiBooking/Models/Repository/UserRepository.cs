@@ -9,28 +9,33 @@ namespace MobiBooking.Models.Repository
 
     public class UserRepository : IUserRepository
     {
+        
+        public UserRepository(BookingDbContext bookingDbContext)
+        {
+            _db = bookingDbContext;
+        }
 
-        public BookingDbContext db = new BookingDbContext(); //dodac parametr DbContextOptions do konstruktora
-
+        private readonly BookingDbContext _db;
 
         public IEnumerable<User> GetAll()
         {
-            return db.Users;
+            return _db.Users;
         }
         public User GetByID(int id)
         {
-            return db.Users.FirstOrDefault(c => c.Id == id);
+
+            return _db.Users.FirstOrDefault(c => c.Id == id);
         }
 
         public void Add(User user)
         {
-            db.Users.Add(user);
-            db.SaveChanges();
+            _db.Users.Add(user);
+            _db.SaveChanges();
         }
 
         public void Update(int id, User item)
         {
-            var user = db.Users.FirstOrDefault(c => c.Id == id);
+            var user = _db.Users.FirstOrDefault(c => c.Id == id);
 
             if(item != null)
             {
@@ -44,9 +49,9 @@ namespace MobiBooking.Models.Repository
         
         public void DeleteByID(int id)
         {
-            var user = db.Users.FirstOrDefault(c => c.Id == id);
+            var user = _db.Users.FirstOrDefault(c => c.Id == id);
 
-            db.Users.Remove(user);
+            _db.Users.Remove(user);
         }
     }
 }

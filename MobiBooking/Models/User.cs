@@ -19,7 +19,7 @@ namespace MobiBooking.Models
 		public string lastname { get; set; }
 		[Required]
 		public string email { get; set; }
-		public propStatus epropStatus { get; set;}
+		//public propStatus epropStatus { get; set;}
 		//public List<Room> bookedRooms { get; set; }
 		//public int hoursWeek { get; set; }
 		//public int hoursMonth { get; set; }
