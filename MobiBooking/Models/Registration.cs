@@ -9,12 +9,12 @@ namespace MobiBooking.Models
     public class Registration : User
     {
         [Required]
-        public string login { get; set; }
+        public string Login { get; set; }
         [Required, DataType(DataType.Password)]
-        public string password { get; set; }
+        public string Password { get; set; }
         [Required, DataType(DataType.EmailAddress)]
-        public string email { get; set; }
-        [Compare(nameof(password))]
-        public string confirmPassword { get; set; }
+        public string Email { get; set; }
+        [Compare(nameof(Password))]
+        public string ConfirmPassword { get; set; }
     }
 }

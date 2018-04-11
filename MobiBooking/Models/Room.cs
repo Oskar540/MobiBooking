@@ -6,32 +6,32 @@ using System.Threading.Tasks;
 
 namespace MobiBooking.Models
 {
-    public enum timeOption { timeSet1, timeSet2, timeSet3 }
-    public enum bookStatus { available, unavailable }
+    public enum TimeOption { timeSet1, timeSet2, timeSet3 }
+    public enum BookStatus { available, unavailable }
 
 
     public class Room
     {
         public int Id { get; set; }
         [Required]
-        public string name { get; set; }
+        public string Name { get; set; }
         [Required]
-        public timeOption etimeOption { get; set; }
-        public string localization { get; set; }
-        public bool isActive { get; set; }
+        public TimeOption EtimeOption { get; set; }
+        public string Localization { get; set; }
+        public bool IsActive { get; set; }
         [Required]
-        public int capacity { get; set; }
-        public bool isReserved { get; set; }
-        public bookStatus ebookStatus { get; set; }
+        public int Capacity { get; set; }
+        public bool IsReserved { get; set; }
+        public BookStatus EbookStatus { get; set; }
 
         public Room(string name, string localization, int capacity)
         {
-            this.name = name;
-            this.localization = localization;
-            this.capacity = capacity;
-            this.isActive = true;
-            etimeOption = 0;
-            ebookStatus = 0;
+            this.Name = name;
+            this.Localization = localization;
+            this.Capacity = capacity;
+            this.IsActive = true;
+            EtimeOption = 0;
+            EbookStatus = 0;
         }
     }
 }

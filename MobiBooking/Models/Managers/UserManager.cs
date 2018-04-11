@@ -23,7 +23,7 @@ namespace MobiBooking.Models.DataManager
         }
         public IEnumerable<User> GetAll()
         {
-            var users = ctx.Users.ToList();
+            var users = ctx.Users;
             return users;
         }
 
@@ -51,11 +51,11 @@ namespace MobiBooking.Models.DataManager
             var user = ctx.Users.Find(id);
             if (user != null)
             {
-                user.login = item.login;
-                user.password = item.password;
-                user.email = item.email;
-                user.name = item.name;
-                user.lastname = item.lastname;
+                user.Login = item.Login;
+                user.Password = item.Password;
+                user.Email = item.Email;
+                user.Name = item.Name;
+                user.Lastname = item.Lastname;
                 //user.bookedRooms = item.bookedRooms;
 
                 userID = ctx.SaveChanges();

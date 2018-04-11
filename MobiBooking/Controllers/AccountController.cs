@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,7 @@ namespace MobiBooking.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
+    [AllowAnonymous]
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -40,6 +42,7 @@ namespace MobiBooking.Controllers
         [HttpGet("{id}", Name = "Get")]
         public string Get(int id)
         {
+            
             return "value: " + id.ToString();
         }
         
@@ -60,7 +63,5 @@ namespace MobiBooking.Controllers
         public void Delete(int id)
         {
         }
-
-        
     }
 }

@@ -6,26 +6,26 @@ using System.Threading.Tasks;
 
 namespace MobiBooking.Models
 {
-	public enum propStatus { user, admin}
+	public enum PropStatus { user, admin}
 	
 	public class User
 	{
 		public int Id { get; set; }
 		[Required]
-		public string login { get; set; }
+		public string Login { get; set; }
 		[Required]
 		[DataType(DataType.Password)]
-		public string password { get; set; }
+		public string Password { get; set; }
         //[Required]
         //[DataType(DataType.Password)]
         //[Compare(nameof(password))]
         //public string confirmPassword { get; set; }
-        public string name { get; set; }
-		public string lastname { get; set; }
+        public string Name { get; set; }
+		public string Lastname { get; set; }
 		[Required]
 		[DataType(DataType.EmailAddress)]
-		public string email { get; set; }
-		//public propStatus epropStatus { get; set;}
+		public string Email { get; set; }
+		//public PropStatus EpropStatus { get; set;}
 		//public List<Room> bookedRooms { get; set; }
 		//public int hoursWeek { get; set; }
 		//public int hoursMonth { get; set; }

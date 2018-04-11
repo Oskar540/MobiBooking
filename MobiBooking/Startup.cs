@@ -69,7 +69,6 @@ namespace MobiBooking
                         options.SignIn.RequireConfirmedEmail = true;
                 options.SignIn.RequireConfirmedPhoneNumber = false;
 
-
             })
     .AddEntityFrameworkStores<BookingDbContext>()
     .AddDefaultTokenProviders();
@@ -82,7 +81,7 @@ namespace MobiBooking
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
                 options.LoginPath = "/Account/Login";
                         // ReturnUrlParameter requires `using Microsoft.AspNetCore.Authentication.Cookies;`
-                        options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
+                        //options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
                 options.SlidingExpiration = true;
             });
             #endregion

@@ -8,11 +8,14 @@ using MobiBooking.Models;
 using MobiBooking.Models.Repository;
 using Microsoft.AspNetCore.Authentication;
 using MobiBooking.Models.DataManager;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace MobiBooking.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
+
     public class UserController : Controller
     {
         private IUserRepository _repo;
@@ -22,11 +25,12 @@ namespace MobiBooking.Controllers
             _repo = repo;
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: api/User
         [HttpGet]
         public IEnumerable<User> Get()
         {
-            return _repo.GetAll().OrderBy(c => c.name);
+            return _repo.GetAll().OrderBy(c => c.Name);
         }
 
         //[HttpGet]
@@ -36,6 +40,7 @@ namespace MobiBooking.Controllers
         //}
 
         // GET: api/User/5
+        [Authorize(Roles = "Admin")]
         [HttpGet("{id}")]
         public User Get(int id)
         {
@@ -49,15 +54,17 @@ namespace MobiBooking.Controllers
         {
             _repo.Add(user);
         }
-        
+
         // PUT: api/User/5
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]User user)
         {
             _repo.Update(user.Id, user);
         }
-        
+
         // DELETE: api/ApiWithActions/5
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
