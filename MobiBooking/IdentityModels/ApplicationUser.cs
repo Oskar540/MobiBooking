@@ -22,6 +22,6 @@ namespace MobiBooking.IdentityModels
         //    return userIdentity;
         //}
 
-        
+
     }
 }

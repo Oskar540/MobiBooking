@@ -38,13 +38,13 @@ namespace MobiBooking.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        // GET: api/Account/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
-        {
+        //// GET: api/Account/5
+        //[HttpGet("{id}", Name = "Get")]
+        //public string Get(int id)
+        //{
             
-            return "value: " + id.ToString();
-        }
+        //    return "value: " + id.ToString();
+        //}
         
         // POST: api/Account
         [HttpPost]
@@ -57,11 +57,18 @@ namespace MobiBooking.Controllers
         public void Put(int id, [FromBody]string value)
         {
         }
-        
+
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+        }
+
+        [HttpGet]
+        [Route("/api/[controller]/login")]
+        public string GetLogin()
+        {
+            return "Get Login value";
         }
     }
 }

@@ -79,9 +79,25 @@ namespace MobiBooking
                 options.Cookie.Name = "MobiBookingCookie";
                 options.Cookie.HttpOnly = true;
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
-                options.LoginPath = "/Account/Login";
+                //options.LoginPath = "/Account/Login";
+                options.Events = new CookieAuthenticationEvents
+                {
+                    OnRedirectToLogin = ctx =>
+                    {
+                        if (ctx.Request.Path.StartsWithSegments("/api") &&
+                            ctx.Response.StatusCode == (int)StatusCodes.Status200OK)
+                        {
+                            ctx.Response.StatusCode = (int)StatusCodes.Status401Unauthorized;
+                        }
+                        else
+                        {
+                            ctx.Response.Redirect(ctx.RedirectUri);
+                        }
+                        return Task.FromResult(0);
+                    }
+                };
                         // ReturnUrlParameter requires `using Microsoft.AspNetCore.Authentication.Cookies;`
-                        //options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
+                        options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
                 options.SlidingExpiration = true;
             });
             #endregion

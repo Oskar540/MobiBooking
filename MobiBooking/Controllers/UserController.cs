@@ -25,7 +25,7 @@ namespace MobiBooking.Controllers
             _repo = repo;
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         // GET: api/User
         [HttpGet]
         public IEnumerable<User> Get()
