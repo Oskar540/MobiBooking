@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MobiBooking.Models
 {
-	public enum PropStatus { user, admin}
+	public enum PropStatus { User, Admin}
 	
 	public class User
 	{
@@ -25,7 +25,7 @@ namespace MobiBooking.Models
 		[Required]
 		[DataType(DataType.EmailAddress)]
 		public string Email { get; set; }
-		//public PropStatus EpropStatus { get; set;}
+		public PropStatus EpropStatus { get; set;}
 		//public List<Room> bookedRooms { get; set; }
 		//public int hoursWeek { get; set; }
 		//public int hoursMonth { get; set; }

@@ -19,10 +19,12 @@ namespace MobiBooking.Controllers
     public class UserController : Controller
     {
         private IUserRepository _repo;
+        //private bool isAuth;
 
         public UserController(IUserRepository repo)
         {
             _repo = repo;
+            //isAuth = User.Identity.IsAuthenticated;
         }
 
         [Authorize]
@@ -30,6 +32,7 @@ namespace MobiBooking.Controllers
         [HttpGet]
         public IEnumerable<User> Get()
         {
+            
             return _repo.GetAll().OrderBy(c => c.Name);
         }
 

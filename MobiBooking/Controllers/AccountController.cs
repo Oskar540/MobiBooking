@@ -64,11 +64,11 @@ namespace MobiBooking.Controllers
         {
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("/api/[controller]/login")]
-        public string GetLogin()
+        public void PostLogin([FromBody]string value)
         {
-            return "Get Login value";
+            
         }
     }
 }

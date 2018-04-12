@@ -17,6 +17,7 @@ using MobiBooking.Models.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using MobiBooking.IdentityModels;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace MobiBooking
 {
@@ -100,6 +101,8 @@ namespace MobiBooking
                         options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
                 options.SlidingExpiration = true;
             });
+
+            
             #endregion
         }
 
