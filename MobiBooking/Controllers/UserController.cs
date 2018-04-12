@@ -27,7 +27,7 @@ namespace MobiBooking.Controllers
             //isAuth = User.Identity.IsAuthenticated;
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         // GET: api/User
         [HttpGet]
         public IEnumerable<User> Get()
