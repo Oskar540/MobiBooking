@@ -11,13 +11,12 @@ namespace MobiBooking.Models.Repository
 
     public class UserRepository : IUserRepository
     {
-        
+        private readonly BookingDbContext _db;
+
         public UserRepository(BookingDbContext bookingDbContext)
         {
             _db = bookingDbContext;
         }
-
-        private readonly BookingDbContext _db;
 
         public IEnumerable<User> GetAll()
         {

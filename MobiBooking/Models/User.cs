@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MobiBooking.Models
 {
-	public enum PropStatus { user, admin}
+	public enum PropStatus { User, Admin}
 	
 	public class User
 	{
@@ -24,7 +25,7 @@ namespace MobiBooking.Models
 		public string Lastname { get; set; }
 		[Required]
 		[DataType(DataType.EmailAddress)]
-		public string Email { get; set; }
+		public new string Email { get; set; }
 		//public PropStatus EpropStatus { get; set;}
 		//public List<Room> bookedRooms { get; set; }
 		//public int hoursWeek { get; set; }
