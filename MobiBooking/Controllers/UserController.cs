@@ -9,7 +9,7 @@ using MobiBooking.Models.Repository;
 using Microsoft.AspNetCore.Authentication;
 using MobiBooking.Models.DataManager;
 using Microsoft.AspNetCore.Authorization;
-
+using System.Security.Claims;
 
 namespace MobiBooking.Controllers
 {
@@ -19,17 +19,20 @@ namespace MobiBooking.Controllers
     public class UserController : Controller
     {
         private IUserRepository _repo;
+        //private bool isAuth;
 
         public UserController(IUserRepository repo)
         {
             _repo = repo;
+            //isAuth = User.Identity.IsAuthenticated;
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         // GET: api/User
         [HttpGet]
         public IEnumerable<User> Get()
         {
+            
             return _repo.GetAll().OrderBy(c => c.Name);
         }
 

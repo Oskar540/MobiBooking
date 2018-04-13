@@ -21,7 +21,5 @@ namespace MobiBooking.Infrastructure
 
     //        return appRoleManager;
     //    }
-
-
     //}
 }

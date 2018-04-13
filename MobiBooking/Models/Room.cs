@@ -23,15 +23,5 @@ namespace MobiBooking.Models
         public int Capacity { get; set; }
         public bool IsReserved { get; set; }
         public BookStatus EbookStatus { get; set; }
-
-        public Room(string name, string localization, int capacity)
-        {
-            this.Name = name;
-            this.Localization = localization;
-            this.Capacity = capacity;
-            this.IsActive = true;
-            EtimeOption = 0;
-            EbookStatus = 0;
-        }
     }
 }
