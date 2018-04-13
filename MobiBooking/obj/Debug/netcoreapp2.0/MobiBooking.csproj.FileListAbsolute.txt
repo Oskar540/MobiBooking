@@ -1,0 +1,11 @@
+C:\Users\Oskar\Documents\Visual Studio 2017\Projects\MobiBooking\MobiBooking\bin\Debug\netcoreapp2.0\MobiBooking.deps.json
+C:\Users\Oskar\Documents\Visual Studio 2017\Projects\MobiBooking\MobiBooking\bin\Debug\netcoreapp2.0\MobiBooking.runtimeconfig.json
+C:\Users\Oskar\Documents\Visual Studio 2017\Projects\MobiBooking\MobiBooking\bin\Debug\netcoreapp2.0\MobiBooking.runtimeconfig.dev.json
+C:\Users\Oskar\Documents\Visual Studio 2017\Projects\MobiBooking\MobiBooking\bin\Debug\netcoreapp2.0\MobiBooking.dll
+C:\Users\Oskar\Documents\Visual Studio 2017\Projects\MobiBooking\MobiBooking\bin\Debug\netcoreapp2.0\MobiBooking.pdb
+C:\Users\Oskar\Documents\Visual Studio 2017\Projects\MobiBooking\MobiBooking\obj\Debug\netcoreapp2.0\MobiBooking.csprojResolveAssemblyReference.cache
+C:\Users\Oskar\Documents\Visual Studio 2017\Projects\MobiBooking\MobiBooking\obj\Debug\netcoreapp2.0\MobiBooking.csproj.CoreCompileInputs.cache
+C:\Users\Oskar\Documents\Visual Studio 2017\Projects\MobiBooking\MobiBooking\obj\Debug\netcoreapp2.0\MobiBooking.AssemblyInfoInputs.cache
+C:\Users\Oskar\Documents\Visual Studio 2017\Projects\MobiBooking\MobiBooking\obj\Debug\netcoreapp2.0\MobiBooking.AssemblyInfo.cs
+C:\Users\Oskar\Documents\Visual Studio 2017\Projects\MobiBooking\MobiBooking\obj\Debug\netcoreapp2.0\MobiBooking.dll
+C:\Users\Oskar\Documents\Visual Studio 2017\Projects\MobiBooking\MobiBooking\obj\Debug\netcoreapp2.0\MobiBooking.pdb
