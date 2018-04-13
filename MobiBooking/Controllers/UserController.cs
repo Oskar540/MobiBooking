@@ -12,13 +12,11 @@ namespace MobiBooking.Controllers
 
     public class UserController : Controller
     {
-        private IUserRepository _repo;
-        //private bool isAuth;
+        private IDefaultRepository<User> _repo;
 
-        public UserController(IUserRepository repo)
+        public UserController(IDefaultRepository<User> repo)
         {
             _repo = repo;
-            //isAuth = User.Identity.IsAuthenticated;
         }
 
         [Authorize(Roles = "Admin")]
@@ -29,41 +27,37 @@ namespace MobiBooking.Controllers
             return _repo.GetAll().OrderBy(c => c.Name);
         }
 
-        //[HttpGet]
-        //public string Get()
-        //{
-        //    return "Hello get";
-        //}
+        
 
         // GET: api/User/5
         [Authorize(Roles = "Admin")]
         [HttpGet("{id}")]
         public User Get(int id)
         {
-            return _repo.GetByID(id);
+            return _repo.Get(id);
         }
 
         // POST: api/User
         [HttpPost]
-        public void Post([FromBody]User user)
+        public int Post([FromBody]User user)
         {
-            _repo.Add(user);
+            return _repo.Add(user);
         }
 
         // PUT: api/User/5
         [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]User user)
+        public int Put(int id, [FromBody]User user)
         {
-            _repo.Update(user.Id, user);
+            return _repo.Update(user.Id, user);
         }
 
         // DELETE: api/ApiWithActions/5
         [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public int Delete(int id)
         {
-            _repo.DeleteByID(id);
+            return _repo.Delete(id);
         }
     }
 }

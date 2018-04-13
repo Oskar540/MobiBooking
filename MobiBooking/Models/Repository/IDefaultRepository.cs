@@ -8,10 +8,10 @@ namespace MobiBooking.Models.Repository
 
         Type Get(int id);
 
-        void Add(Type b);
+        int Add(Type b);
 
-        void Update(int id, Type b);
+        int Update(int id, Type b);
 
-        void Delete(int id);
+        int Delete(int id);
     }
 }

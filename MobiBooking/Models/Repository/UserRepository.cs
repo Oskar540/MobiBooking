@@ -4,13 +4,13 @@ using System.Linq;
 
 namespace MobiBooking.Models.Repository
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : IDefaultRepository<User>
     {
         private readonly BookingDbContext _db;
 
-        public UserRepository(BookingDbContext bookingDbContext)
+        public UserRepository(BookingDbContext db)
         {
-            _db = bookingDbContext;
+            _db = db;
         }
 
         public IEnumerable<User> GetAll()
@@ -18,43 +18,35 @@ namespace MobiBooking.Models.Repository
             return _db.Users;
         }
 
-        public User GetByID(int id)
+        public User Get(int id)
         {
             return _db.Users.FirstOrDefault(c => c.Id == id);
         }
 
-        public void Add(User user)
+        public int Add(User user)
         {
             _db.Users.Add(user);
             _db.SaveChanges();
+
+            return user.Id;
         }
 
-        public void Update(int id, User item)
+        public int Update(int id, User item)
         {
             item.Id = id;
             _db.Users.Attach(item);
 
-            //var user = _db.Users.FirstOrDefault(c => c.Id == id);
-            //if (user == null) return;
-
-            //if(item != null)
-            //{
-            //    user.login = item.login;
-            //    user.password = item.password;
-            //    user.email = item.email;
-            //    user.name = item.name;
-            //    user.lastname = item.lastname;
-            //}
+            return item.Id;
         }
 
-        public void DeleteByID(int id)
+        public int Delete(int id)
         {
             try
             {
                 _db.Users.Remove(new User() { Id = id });
                 _db.SaveChanges();
             }
-            catch (Exception ex)
+            catch
             {
                 if (_db.Users.Any(i => i.Id != id))
                 {
@@ -62,17 +54,11 @@ namespace MobiBooking.Models.Repository
                 }
                 else
                 {
-                    throw ex;
+                    throw;
                 }
             }
 
-            //var user = _db.Users.FirstOrDefault(c => c.Id == id);
-            //_db.Users.Remove(user);
-
-            //User user = new User() { Id = id };
-            //_db.Users.Attach(user);
-            //_db.Users.Remove(user);
-            //_db.SaveChanges();
+            return id;
         }
     }
 }

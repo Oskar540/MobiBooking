@@ -4,50 +4,51 @@ using System.Linq;
 
 namespace MobiBooking.Models.DataManager
 {
-    public class UserManager : IDataRepository<User, int>
+    public class UserManager : IDefaultRepository<User>
     {
-        private BookingDbContext ctx;
+        private BookingDbContext _ctx;
 
-        public UserManager(BookingDbContext c)
+        public UserManager(BookingDbContext ctx)
         {
-            ctx = c;
+            _ctx = ctx;
         }
 
         public User Get(int id)
         {
-            var user = ctx.Users.FirstOrDefault(b => b.Id == id);
+            var user = _ctx.Users.FirstOrDefault(b => b.Id == id);
             return user;
         }
 
         public IEnumerable<User> GetAll()
         {
-            var users = ctx.Users;
+            var users = _ctx.Users;
             return users;
         }
 
         public int Add(User user)
         {
-            ctx.Users.Add(user);
-            int userID = ctx.SaveChanges();
-            return userID;
+            _ctx.Users.Add(user);
+            _ctx.SaveChanges();
+
+            return user.Id;
         }
 
         public int Delete(int id)
         {
-            int userID = 0;
-            var user = ctx.Users.FirstOrDefault(b => b.Id == id);
+            var user = _ctx.Users.FirstOrDefault(b => b.Id == id);
             if (user != null)
             {
-                ctx.Users.Remove(user);
-                userID = ctx.SaveChanges();
+                _ctx.Users.Remove(user);
+                _ctx.SaveChanges();
             }
-            return userID;
+            return user.Id;
         }
 
         public int Update(int id, User item)
         {
-            int userID = 0;
-            var user = ctx.Users.Find(id);
+            var user = _ctx.Users.FirstOrDefault(b => b.Id == id);
+            
+
             if (user != null)
             {
                 user.Login = item.Login;
@@ -55,11 +56,11 @@ namespace MobiBooking.Models.DataManager
                 user.Email = item.Email;
                 user.Name = item.Name;
                 user.Lastname = item.Lastname;
-                //user.bookedRooms = item.bookedRooms;
 
-                userID = ctx.SaveChanges();
+                _ctx.SaveChanges();
             }
-            return userID;
+
+            return user.Id;
         }
     }
 }

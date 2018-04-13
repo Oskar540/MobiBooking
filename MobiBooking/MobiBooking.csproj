@@ -12,6 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Infrastructure\" />
+    <Folder Include="Models\Containers\" />
     <Folder Include="Roles\" />
     <Folder Include="wwwroot\css\" />
     <Folder Include="wwwroot\img\" />

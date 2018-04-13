@@ -11,9 +11,9 @@ namespace MobiBooking.Controllers
     [Authorize]
     public class RoomsController : Controller
     {
-        private readonly IRoomRepository _repo;
+        private readonly IDefaultRepository<Room> _repo;
 
-        public RoomsController(IRoomRepository repo)
+        public RoomsController(IDefaultRepository<Room> repo)
         {
             _repo = repo;
         }

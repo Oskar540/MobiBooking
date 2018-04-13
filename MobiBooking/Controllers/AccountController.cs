@@ -9,25 +9,15 @@ namespace MobiBooking.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
-    [AllowAnonymous]
+    [Authorize(Roles = "Admin")]
     public class AccountController : Controller
     {
-        //private readonly RoleManager<ApplicationUser> _roleManager;
-        private readonly UserManager<ApplicationUser> _userManager;
-
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly ILogger _logger;
+        private readonly AccountController _repo;
 
         public AccountController(
-                    //RoleManager<ApplicationUser> roleManager,
-                    UserManager<ApplicationUser> userManager,
-                    SignInManager<ApplicationUser> signInManager,
-                    ILogger<AccountController> logger)
+                    AccountController repo)
         {
-            //_roleManager = roleManager;
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _logger = logger;
+            _repo = repo;
         }
 
         // GET: api/Account
@@ -37,12 +27,7 @@ namespace MobiBooking.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        //// GET: api/Account/5
-        //[HttpGet("{id}", Name = "Get")]
-        //public string Get(int id)
-        //{
-        //    return "value: " + id.ToString();
-        //}
+        
 
         // POST: api/Account
         [HttpPost]
@@ -68,11 +53,6 @@ namespace MobiBooking.Controllers
         {
         }
 
-        //[HttpPost]
-        //[AllowAnonymous]
-        //[ValidateAntiForgeryToken]
-        //public async Task<object> Login([FromBody] string value)
-        //{
-        //}
+        
     }
 }

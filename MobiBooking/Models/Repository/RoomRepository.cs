@@ -4,55 +4,60 @@ using System.Linq;
 
 namespace MobiBooking.Models.Repository
 {
-    public class RoomRepository : IRoomRepository
+    public class RoomRepository : IDefaultRepository<Room>
     {
-        private readonly BookingDbContext _context;
+        private readonly BookingDbContext _db;
 
-        public RoomRepository(BookingDbContext context)
+        public RoomRepository(BookingDbContext db)
         {
-            _context = context;
+            _db = db;
         }
 
-        public void Add(Room b)
+        public int Add(Room b)
         {
-            _context.Rooms.Add(b);
-            _context.SaveChanges();
+            _db.Rooms.Add(b);
+            _db.SaveChanges();
+            return b.Id;
         }
 
-        public void Delete(int id)
+        public int Delete(int id)
         {
             try
             {
-                _context.Rooms.Remove(new Room() { Id = id });
-                _context.SaveChanges();
+                _db.Rooms.Remove(new Room() { Id = id });
+                _db.SaveChanges();
             }
-            catch (Exception ex)
+            catch
             {
-                if (_context.Rooms.Any(i => i.Id != id))
+                if (_db.Rooms.Any(i => i.Id != id))
                 {
                     throw new NullReferenceException();
                 }
                 else
                 {
-                    throw ex;
+                    throw;
                 }
             }
+            return id;
         }
 
         public Room Get(int id)
         {
-            return _context.Rooms.FirstOrDefault(c => c.Id == id);
+            return _db.Rooms.FirstOrDefault(c => c.Id == id);
         }
 
         public IEnumerable<Room> GetAll()
         {
-            return _context.Rooms;
+            return _db.Rooms;
         }
 
-        public void Update(int id, Room b)
+        public int Update(int id, Room b)
         {
             b.Id = id;
-            _context.Rooms.Attach(b);
+            _db.Rooms.Attach(b);
+            _db.SaveChanges();
+
+            return b.Id;
         }
     }
 }
