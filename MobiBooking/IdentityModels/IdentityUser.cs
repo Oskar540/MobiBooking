@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MobiBooking.IdentityModels
 {
-    public class IdentityUser<TKey> /*: User*/ where TKey : IEquatable<TKey>
+    public class IdentityUser<TKey> : User where TKey : IEquatable<TKey>
     {
 
 

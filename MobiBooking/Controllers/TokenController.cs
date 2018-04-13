@@ -1,23 +1,33 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using MobiBooking.Models;
+using MobiBooking.Models.Repository;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using System.Linq;
 
 namespace MobiBooking.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
+    [AllowAnonymous]
     public class TokenController : Controller
     {
         private IConfiguration _config;
+        private IUserRepository _repo;
+        private BookingDbContext _db;
 
-        public TokenController(IConfiguration config)
+        public TokenController(IConfiguration config, IUserRepository repo, BookingDbContext db)
         {
             _config = config;
+            _repo = repo;
+            _db = db;
         }
 
         [AllowAnonymous]
@@ -35,6 +45,9 @@ namespace MobiBooking.Controllers
 
             return response;
         }
+
+
+
 
         private string BuildToken(UserModel user)
         {
@@ -61,12 +74,25 @@ namespace MobiBooking.Controllers
         {
             UserModel user = null;
 
-            if (login.Username == "username1" && login.Password == "password1")
+            if (login.Username == "mario" && login.Password == "secret")
             {
-                user = new UserModel { Name = "Test1  Test2", Email = "testemail@domain.com" };
+                user = new UserModel { Name = "Mario Rossi", Email = "mario.rossi@domain.com" };
             }
             return user;
         }
+
+        private User Authenticate(User login)
+        {
+            User user = _db.Users.FirstOrDefault(c => c.Login == login.Login);
+
+
+            if (login.Password == user.Password)
+            {
+                return user;
+            }
+            else return null;
+        }
+
 
         public class LoginModel
         {

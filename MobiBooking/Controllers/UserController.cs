@@ -9,7 +9,7 @@ using MobiBooking.Models.Repository;
 using Microsoft.AspNetCore.Authentication;
 using MobiBooking.Models.DataManager;
 using Microsoft.AspNetCore.Authorization;
-
+using System.Security.Claims;
 
 namespace MobiBooking.Controllers
 {

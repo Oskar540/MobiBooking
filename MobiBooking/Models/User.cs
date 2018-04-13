@@ -9,7 +9,7 @@ namespace MobiBooking.Models
 {
 	public enum PropStatus { User, Admin}
 	
-	public class User : IdentityUser
+	public class User
 	{
 		public int Id { get; set; }
 		[Required]
