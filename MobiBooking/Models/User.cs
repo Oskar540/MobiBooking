@@ -26,7 +26,7 @@ namespace MobiBooking.Models
 		[Required]
 		[DataType(DataType.EmailAddress)]
 		public new string Email { get; set; }
-		public PropStatus EpropStatus { get; set;}
+		//public PropStatus EpropStatus { get; set;}
 		//public List<Room> bookedRooms { get; set; }
 		//public int hoursWeek { get; set; }
 		//public int hoursMonth { get; set; }

@@ -32,7 +32,7 @@ namespace MobiBooking.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult CreateToken([FromBody]LoginModel login)
+        public IActionResult CreateToken([FromBody]User login)
         {
             IActionResult response = Unauthorized();
             var user = Authenticate(login);
@@ -70,6 +70,26 @@ namespace MobiBooking.Controllers
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
+        private string BuildToken(User user)
+        {
+            var claims = new[] {
+        new Claim(JwtRegisteredClaimNames.Sub, user.Name),
+        new Claim(JwtRegisteredClaimNames.Email, user.Email),
+        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+    };
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(_config["Jwt:Issuer"],
+              _config["Jwt:Issuer"],
+              claims,
+              expires: DateTime.Now.AddMinutes(30),
+              signingCredentials: creds);
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
         private UserModel Authenticate(LoginModel login)
         {
             UserModel user = null;
@@ -85,12 +105,16 @@ namespace MobiBooking.Controllers
         {
             User user = _db.Users.FirstOrDefault(c => c.Login == login.Login);
 
-
-            if (login.Password == user.Password)
+            if(user != null)
             {
-                return user;
+                if (login.Password == user.Password)
+                {
+                    return user;
+                }
+                else return null;
             }
-            else return null;
+
+            return user;
         }
 
 
