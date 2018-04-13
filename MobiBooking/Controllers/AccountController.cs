@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MobiBooking.IdentityModels;
-using MobiBooking.Models.DataManager;
+using System.Collections.Generic;
 
 namespace MobiBooking.Controllers
 {
@@ -19,6 +14,7 @@ namespace MobiBooking.Controllers
     {
         //private readonly RoleManager<ApplicationUser> _roleManager;
         private readonly UserManager<ApplicationUser> _userManager;
+
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger _logger;
 
@@ -45,7 +41,6 @@ namespace MobiBooking.Controllers
         //[HttpGet("{id}", Name = "Get")]
         //public string Get(int id)
         //{
-
         //    return "value: " + id.ToString();
         //}
 
@@ -71,7 +66,6 @@ namespace MobiBooking.Controllers
         [Route("/api/[controller]/login")]
         public void PostLogin([FromBody]string value)
         {
-
         }
 
         //[HttpPost]
@@ -79,8 +73,6 @@ namespace MobiBooking.Controllers
         //[ValidateAntiForgeryToken]
         //public async Task<object> Login([FromBody] string value)
         //{
-            
         //}
     }
-
 }

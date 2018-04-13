@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MobiBooking.Models;
 using MobiBooking.Models.Repository;
-using Microsoft.AspNetCore.Authentication;
-using MobiBooking.Models.DataManager;
-using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MobiBooking.Controllers
 {
@@ -32,7 +26,6 @@ namespace MobiBooking.Controllers
         [HttpGet]
         public IEnumerable<User> Get()
         {
-            
             return _repo.GetAll().OrderBy(c => c.Name);
         }
 
@@ -49,7 +42,6 @@ namespace MobiBooking.Controllers
         {
             return _repo.GetByID(id);
         }
-        
 
         // POST: api/User
         [HttpPost]
@@ -73,6 +65,5 @@ namespace MobiBooking.Controllers
         {
             _repo.DeleteByID(id);
         }
-
     }
 }

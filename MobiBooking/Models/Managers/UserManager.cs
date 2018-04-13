@@ -1,15 +1,12 @@
-﻿using System;
+﻿using MobiBooking.Models.Repository;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using MobiBooking.Models.Repository;
-using System.Windows;
 
 namespace MobiBooking.Models.DataManager
 {
     public class UserManager : IDataRepository<User, int>
     {
-        BookingDbContext ctx;
+        private BookingDbContext ctx;
 
         public UserManager(BookingDbContext c)
         {
@@ -19,8 +16,9 @@ namespace MobiBooking.Models.DataManager
         public User Get(int id)
         {
             var user = ctx.Users.FirstOrDefault(b => b.Id == id);
-                return user;
+            return user;
         }
+
         public IEnumerable<User> GetAll()
         {
             var users = ctx.Users;
@@ -33,6 +31,7 @@ namespace MobiBooking.Models.DataManager
             int userID = ctx.SaveChanges();
             return userID;
         }
+
         public int Delete(int id)
         {
             int userID = 0;

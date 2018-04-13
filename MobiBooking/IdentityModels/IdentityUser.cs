@@ -1,15 +1,10 @@
 ﻿using MobiBooking.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MobiBooking.IdentityModels
 {
     public class IdentityUser<TKey> : User where TKey : IEquatable<TKey>
     {
-
-
         public virtual DateTimeOffset? LockoutEnd { get; set; }
         public virtual bool TwoFactorEnabled { get; set; }
         public virtual bool PhoneNumberConfirmed { get; set; }

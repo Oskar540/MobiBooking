@@ -1,14 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace MobiBooking.Models.Repository
 {
-
     public class UserRepository : IUserRepository
     {
         private readonly BookingDbContext _db;
@@ -22,9 +17,9 @@ namespace MobiBooking.Models.Repository
         {
             return _db.Users;
         }
+
         public User GetByID(int id)
         {
-
             return _db.Users.FirstOrDefault(c => c.Id == id);
         }
 
@@ -38,7 +33,6 @@ namespace MobiBooking.Models.Repository
         {
             item.Id = id;
             _db.Users.Attach(item);
-
 
             //var user = _db.Users.FirstOrDefault(c => c.Id == id);
             //if (user == null) return;
@@ -72,18 +66,13 @@ namespace MobiBooking.Models.Repository
                 }
             }
 
-
-
             //var user = _db.Users.FirstOrDefault(c => c.Id == id);
             //_db.Users.Remove(user);
-
-
 
             //User user = new User() { Id = id };
             //_db.Users.Attach(user);
             //_db.Users.Remove(user);
             //_db.SaveChanges();
-
         }
     }
 }

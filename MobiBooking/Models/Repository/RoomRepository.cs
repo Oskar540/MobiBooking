@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace MobiBooking.Models.Repository
 {
@@ -13,7 +12,6 @@ namespace MobiBooking.Models.Repository
         {
             _context = context;
         }
-
 
         public void Add(Room b)
         {

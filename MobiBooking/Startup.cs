@@ -1,26 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Microsoft.EntityFrameworkCore;
-using MobiBooking.Models;
-using Microsoft.AspNetCore.Http;
-using Swashbuckle.AspNetCore.Swagger;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using MobiBooking.Models.Repository;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using MobiBooking.IdentityModels;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using MobiBooking.IdentityModels;
+using MobiBooking.Models;
+using MobiBooking.Models.Repository;
+using Swashbuckle.AspNetCore.Swagger;
+using System;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MobiBooking
 {
@@ -42,6 +36,7 @@ namespace MobiBooking
             opts.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             #region JWT Auth
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         .AddJwtBearer(options =>
         {
@@ -56,8 +51,8 @@ namespace MobiBooking
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
             };
         });
-            #endregion
 
+            #endregion JWT Auth
 
             services.AddMvc();
             services.AddSwaggerGen(c =>
@@ -86,11 +81,9 @@ namespace MobiBooking
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
                 options.Lockout.MaxFailedAccessAttempts = 5;
 
-
                 // SignIn settings
                 options.SignIn.RequireConfirmedEmail = true;
                 options.SignIn.RequireConfirmedPhoneNumber = false;
-
             })
     .AddEntityFrameworkStores<BookingDbContext>()
     .AddDefaultTokenProviders();
@@ -123,8 +116,7 @@ namespace MobiBooking
                 options.SlidingExpiration = true;
             });
 
-            
-            #endregion
+            #endregion Identity
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -151,44 +143,43 @@ namespace MobiBooking
             app.UseMvc();
         }
 
-//        public static async Task CreateRoles(IServiceProvider serviceProvider, IConfiguration Configuration)
-//        {
-
-//            //adding customs roles
-//            var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-//            var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-//            string[] roleNames = { "Admin", "Manager", "Member" };
-//            IdentityResult roleResult;
-//​
-//            foreach (var roleName in roleNames)
-//            {
-//                // creating the roles and seeding them to the database
-//                var roleExist = await RoleManager.RoleExistsAsync(roleName);
-//                if (!roleExist)
-//                {
-//                    roleResult = await RoleManager.CreateAsync(new IdentityRole(roleName));
-//                }
-//            }
-//​
-//            // creating a super user who could maintain the web app
-//            var poweruser = new ApplicationUser
-//            {
-//                UserName = Configuration.GetSection("AppSettings")["UserEmail"],
-//                Email = Configuration.GetSection("AppSettings")["UserEmail"]
-//            };
-//​
-//            string userPassword = Configuration.GetSection("AppSettings")["UserPassword"];
-//            var user = await UserManager.FindByEmailAsync(Configuration.GetSection("AppSettings")["UserEmail"]);
-//​
-//            if (user == null)
-//            {
-//                var createPowerUser = await UserManager.CreateAsync(poweruser, userPassword);
-//                if (createPowerUser.Succeeded)
-//                {
-//                    // here we assign the new user the "Admin" role 
-//                    await UserManager.AddToRoleAsync(poweruser, "Admin");
-//                }
-//            }
-//        }
+        //        public static async Task CreateRoles(IServiceProvider serviceProvider, IConfiguration Configuration)
+        //        {
+        //            //adding customs roles
+        //            var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+        //            var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+        //            string[] roleNames = { "Admin", "Manager", "Member" };
+        //            IdentityResult roleResult;
+        //​
+        //            foreach (var roleName in roleNames)
+        //            {
+        //                // creating the roles and seeding them to the database
+        //                var roleExist = await RoleManager.RoleExistsAsync(roleName);
+        //                if (!roleExist)
+        //                {
+        //                    roleResult = await RoleManager.CreateAsync(new IdentityRole(roleName));
+        //                }
+        //            }
+        //​
+        //            // creating a super user who could maintain the web app
+        //            var poweruser = new ApplicationUser
+        //            {
+        //                UserName = Configuration.GetSection("AppSettings")["UserEmail"],
+        //                Email = Configuration.GetSection("AppSettings")["UserEmail"]
+        //            };
+        //​
+        //            string userPassword = Configuration.GetSection("AppSettings")["UserPassword"];
+        //            var user = await UserManager.FindByEmailAsync(Configuration.GetSection("AppSettings")["UserEmail"]);
+        //​
+        //            if (user == null)
+        //            {
+        //                var createPowerUser = await UserManager.CreateAsync(poweruser, userPassword);
+        //                if (createPowerUser.Succeeded)
+        //                {
+        //                    // here we assign the new user the "Admin" role
+        //                    await UserManager.AddToRoleAsync(poweruser, "Admin");
+        //                }
+        //            }
+        //        }
     }
 }
