@@ -4,6 +4,5 @@ namespace MobiBooking.IdentityModels
 {
     public class ApplicationUser : IdentityUser
     {
-        
     }
 }

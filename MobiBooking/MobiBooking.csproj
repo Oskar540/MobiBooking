@@ -5,22 +5,29 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Infrastructure\**" />
+    <Compile Remove="Models\Containers\**" />
     <Compile Remove="src\**" />
+    <Content Remove="Infrastructure\**" />
+    <Content Remove="Models\Containers\**" />
     <Content Remove="src\**" />
+    <EmbeddedResource Remove="Infrastructure\**" />
+    <EmbeddedResource Remove="Models\Containers\**" />
     <EmbeddedResource Remove="src\**" />
+    <None Remove="Infrastructure\**" />
+    <None Remove="Models\Containers\**" />
     <None Remove="src\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Infrastructure\" />
-    <Folder Include="Models\Containers\" />
-    <Folder Include="Roles\" />
+    <Folder Include="Services\" />
     <Folder Include="wwwroot\css\" />
     <Folder Include="wwwroot\img\" />
     <Folder Include="wwwroot\js\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="6.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.0.2" />

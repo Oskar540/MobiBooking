@@ -27,8 +27,6 @@ namespace MobiBooking.Controllers
             return _repo.GetAll().OrderBy(c => c.Name);
         }
 
-        
-
         // GET: api/User/5
         [Authorize(Roles = "Admin")]
         [HttpGet("{id}")]

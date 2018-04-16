@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace MobiBooking.Models.Repository
 {
-    public class TokenRepository : IDefaultRepository<User>
+    public class TokenRepository : ITokenRepository<User>
     {
 
         private readonly BookingDbContext _db;
@@ -23,46 +23,19 @@ namespace MobiBooking.Models.Repository
             _config = config;
         }
 
-        public int Add(User b)
+        public User Create(User login)
         {
-            throw new NotImplementedException();
-        }
-
-        public int Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public User Get(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<User> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public int Update(int id, User b)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IActionResult Create(User login)
-        {
-            IActionResult response = Unauthorized(); //Unauthorized() does not exist in the current context
             var user = Authenticate(login);
 
             if (user != null)
             {
-                var tokenString = BuildToken(user);
-                response = Ok(new { token = tokenString }); //Ok() does not exist in the current context
+                BuildToken(user);
             }
 
-            return response;
+            return user;
         }
 
-        private string BuildToken(User user)
+        private void BuildToken(User user)
         {
             var claims = new[] {
             new Claim(JwtRegisteredClaimNames.Sub, user.Name),
@@ -78,13 +51,12 @@ namespace MobiBooking.Models.Repository
               claims,
               expires: DateTime.Now.AddMinutes(30),
               signingCredentials: creds);
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
         private User Authenticate(User login)
         {
             return _db.Users.FirstOrDefault(c => c.Login == login.Login && c.Password == login.Password);
         }
+
     }
 }

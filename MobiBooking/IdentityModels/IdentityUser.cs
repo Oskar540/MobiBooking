@@ -14,10 +14,10 @@ namespace MobiBooking.IdentityModels
         public virtual string PasswordHash { get; set; }
         public virtual bool EmailConfirmed { get; set; }
         public virtual string NormalizedEmail { get; set; }
-        public virtual string Email { get; set; }
+        public new virtual string Email { get; set; }
         public virtual string NormalizedUserName { get; set; }
         public virtual string UserName { get; set; }
-        public virtual TKey Id { get; set; }
+        public new virtual TKey Id { get; set; }
         public virtual bool LockoutEnabled { get; set; }
         public virtual int AccessFailedCount { get; set; }
     }

@@ -21,7 +21,7 @@ namespace MobiBooking.Models
 
         [Required]
         [DataType(DataType.EmailAddress)]
-        public new string Email { get; set; }
+        public string Email { get; set; }
         
     }
 }

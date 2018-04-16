@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -14,7 +13,6 @@ using MobiBooking.Models.Repository;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MobiBooking
 {
@@ -31,11 +29,11 @@ namespace MobiBooking
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IDefaultRepository<User>, UserRepository>();
+            services.AddTransient<ITokenRepository<User>, TokenRepository>();
             services.AddDbContext<BookingDbContext>(opts =>
             opts.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             {
-
                 services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
@@ -50,42 +48,36 @@ namespace MobiBooking
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                 };
             });
-
             }
 
             services.AddMvc();
+            services.AddAutoMapper(typeof(Startup));
             services.AddSwaggerGen(c =>
            {
                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
            });
 
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
+                    // Password settings
+                    options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequiredUniqueChars = 2;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireNonAlphanumeric = true;
 
+                    // Lockout settings
+                    options.Lockout.AllowedForNewUsers = true;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.MaxFailedAccessAttempts = 5;
 
-
-                services.AddIdentity<ApplicationUser, IdentityRole>(options =>
-                {
-                // Password settings
-                options.Password.RequireDigit = true;
-                    options.Password.RequiredLength = 8;
-                    options.Password.RequiredUniqueChars = 2;
-                    options.Password.RequireLowercase = true;
-                    options.Password.RequireUppercase = true;
-                    options.Password.RequireNonAlphanumeric = true;
-
-                // Lockout settings
-                options.Lockout.AllowedForNewUsers = true;
-                    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-                    options.Lockout.MaxFailedAccessAttempts = 5;
-
-                // SignIn settings
-                options.SignIn.RequireConfirmedEmail = true;
-                    options.SignIn.RequireConfirmedPhoneNumber = false;
-                })
-        .AddEntityFrameworkStores<BookingDbContext>()
-        .AddDefaultTokenProviders();
-
-            }
+                    // SignIn settings
+                    options.SignIn.RequireConfirmedEmail = true;
+                options.SignIn.RequireConfirmedPhoneNumber = false;
+            })
+    .AddEntityFrameworkStores<BookingDbContext>()
+    .AddDefaultTokenProviders();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -107,10 +99,7 @@ namespace MobiBooking
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
 
-
             app.UseMvc();
         }
-
-        
     }
 }

@@ -62,5 +62,10 @@ namespace MobiBooking.Models.DataManager
 
             return user.Id;
         }
+
+        public User Create(User login)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
