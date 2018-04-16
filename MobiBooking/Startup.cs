@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -52,10 +54,23 @@ namespace MobiBooking
 
             services.AddMvc();
             services.AddAutoMapper(typeof(Startup));
+            var config = new AutoMapper.MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<UserLogin, User>();
+            });
+            var mapper = config.CreateMapper();
+
             services.AddSwaggerGen(c =>
            {
                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
            });
+
+            services.AddAuthorization(options => {
+                options.DefaultPolicy = 
+                new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme)
+                .RequireAuthenticatedUser().Build();
+            });
+
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
@@ -98,6 +113,28 @@ namespace MobiBooking
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
+
+            var secretKey = Configuration.GetSection("Jwt:Key").Value;
+            var issuer = Configuration.GetSection("Jwt:Issuer").Value;
+            var audience = Configuration.GetSection("Jwt:Audience").Value;
+            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = signingKey,
+
+                // Validate the JWT Issuer (iss) claim
+                ValidateIssuer = true,
+                ValidIssuer = issuer,
+
+                // Validate the JWT Audience (aud) claim
+                ValidateAudience = true,
+                ValidAudience = audience
+            };
+
+            
+
+            
 
             app.UseMvc();
         }

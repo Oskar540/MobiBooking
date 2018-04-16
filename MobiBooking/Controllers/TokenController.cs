@@ -33,5 +33,11 @@ namespace MobiBooking.Controllers
                 return Unauthorized();
             }
         }
+
+        [HttpGet]
+        public User GetToken(int Id)
+        {
+            return new User();
+        }
     }
 }

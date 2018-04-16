@@ -47,7 +47,6 @@ namespace MobiBooking.Models.DataManager
         public int Update(int id, User item)
         {
             var user = _ctx.Users.FirstOrDefault(b => b.Id == id);
-            
 
             if (user != null)
             {

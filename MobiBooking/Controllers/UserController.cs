@@ -22,7 +22,7 @@ namespace MobiBooking.Controllers
         [Authorize(Roles = "Admin")]
         // GET: api/User
         [HttpGet]
-        public IEnumerable<User> Get()
+        public IEnumerable<User> GetAll()
         {
             return _repo.GetAll().OrderBy(c => c.Name);
         }
@@ -30,14 +30,14 @@ namespace MobiBooking.Controllers
         // GET: api/User/5
         [Authorize(Roles = "Admin")]
         [HttpGet("{id}")]
-        public User Get(int id)
+        public User GetbyId(int id)
         {
             return _repo.Get(id);
         }
 
         // POST: api/User
         [HttpPost]
-        public int Post([FromBody]User user)
+        public int PostNewUser([FromBody]User user)
         {
             return _repo.Add(user);
         }
@@ -45,7 +45,7 @@ namespace MobiBooking.Controllers
         // PUT: api/User/5
         [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
-        public int Put(int id, [FromBody]User user)
+        public int PutUserById(int id, [FromBody]User user)
         {
             return _repo.Update(user.Id, user);
         }
@@ -53,7 +53,7 @@ namespace MobiBooking.Controllers
         // DELETE: api/ApiWithActions/5
         [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
-        public int Delete(int id)
+        public int DeleteById(int id)
         {
             return _repo.Delete(id);
         }

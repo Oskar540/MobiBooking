@@ -1,19 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MobiBooking.Models.Repository
 {
     public class TokenRepository : ITokenRepository<User>
     {
-
         private readonly BookingDbContext _db;
         private readonly IConfiguration _config;
 
@@ -58,5 +55,9 @@ namespace MobiBooking.Models.Repository
             return _db.Users.FirstOrDefault(c => c.Login == login.Login && c.Password == login.Password);
         }
 
+        public User Get(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
