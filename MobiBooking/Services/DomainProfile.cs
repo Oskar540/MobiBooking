@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MobiBooking.DTO;
 using MobiBooking.Models;
 using System;
 using System.Collections.Generic;
@@ -7,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace MobiBooking.Services
 {
-    public class UserDto : Profile
+    public class DomainProfile : Profile
     {
-        public UserDto()
+        public DomainProfile()
         {
-            CreateMap<User, UserLogin>();
-            CreateMap<UserLogin, User>();
+            CreateMap<User, UserDto>();
+            CreateMap<Room, RoomDto>();
         }
     }
 }

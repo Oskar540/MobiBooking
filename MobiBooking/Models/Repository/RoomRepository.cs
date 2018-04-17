@@ -29,14 +29,7 @@ namespace MobiBooking.Models.Repository
             }
             catch
             {
-                if (_db.Rooms.Any(i => i.Id != id))
-                {
-                    throw new NullReferenceException();
-                }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
             return id;
         }

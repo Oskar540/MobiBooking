@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using MobiBooking.Services;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -22,6 +23,7 @@ namespace MobiBooking.Models.Repository
 
         public User Create(User login)
         {
+
             var user = Authenticate(login);
 
             if (user != null)
@@ -44,7 +46,7 @@ namespace MobiBooking.Models.Repository
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(_config["Jwt:Issuer"],
-              _config["Jwt:Issuer"],
+              _config["Jwt:Audience"],
               claims,
               expires: DateTime.Now.AddMinutes(30),
               signingCredentials: creds);
@@ -57,7 +59,7 @@ namespace MobiBooking.Models.Repository
 
         public User Get(int id)
         {
-            throw new NotImplementedException();
+            return new User {Id=id, Login = "qwerty123", Password = "zaq1@WSX" };
         }
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using MobiBooking.Models;
 using MobiBooking.Models.Repository;
+using MobiBooking.Services;
 
 namespace MobiBooking.Controllers
 {
@@ -13,12 +14,10 @@ namespace MobiBooking.Controllers
     public class TokenController : Controller
     {
         private ITokenRepository<User> _repo;
-        private readonly IMapper _mapper;
 
-        public TokenController(ITokenRepository<User> repo, IMapper mapper)
+        public TokenController(ITokenRepository<User> repo)
         {
             _repo = repo;
-            _mapper = mapper;
         }
 
         [HttpPost]
@@ -37,7 +36,7 @@ namespace MobiBooking.Controllers
         [HttpGet]
         public User GetToken(int Id)
         {
-            return new User();
+            return _repo.Get(Id);
         }
     }
 }

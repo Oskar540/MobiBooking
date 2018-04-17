@@ -12,6 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using MobiBooking.IdentityModels;
 using MobiBooking.Models;
 using MobiBooking.Models.Repository;
+using MobiBooking.Services;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Text;
@@ -46,7 +47,7 @@ namespace MobiBooking
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = Configuration["Jwt:Issuer"],
-                    ValidAudience = Configuration["Jwt:Issuer"],
+                    ValidAudience = Configuration["Jwt:Audience"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                 };
             });
@@ -54,11 +55,6 @@ namespace MobiBooking
 
             services.AddMvc();
             services.AddAutoMapper(typeof(Startup));
-            var config = new AutoMapper.MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<UserLogin, User>();
-            });
-            var mapper = config.CreateMapper();
 
             services.AddSwaggerGen(c =>
            {

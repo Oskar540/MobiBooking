@@ -15,14 +15,12 @@ namespace MobiBooking.Models.DataManager
 
         public User Get(int id)
         {
-            var user = _ctx.Users.FirstOrDefault(b => b.Id == id);
-            return user;
+            return _ctx.Users.FirstOrDefault(b => b.Id == id);
         }
 
         public IEnumerable<User> GetAll()
         {
-            var users = _ctx.Users;
-            return users;
+            return _ctx.Users;
         }
 
         public int Add(User user)
@@ -46,25 +44,10 @@ namespace MobiBooking.Models.DataManager
 
         public int Update(int id, User item)
         {
-            var user = _ctx.Users.FirstOrDefault(b => b.Id == id);
+            item.Id = id;
+            _ctx.Users.Attach(item);
 
-            if (user != null)
-            {
-                user.Login = item.Login;
-                user.Password = item.Password;
-                user.Email = item.Email;
-                user.Name = item.Name;
-                user.Lastname = item.Lastname;
-
-                _ctx.SaveChanges();
-            }
-
-            return user.Id;
-        }
-
-        public User Create(User login)
-        {
-            throw new System.NotImplementedException();
+            return item.Id;
         }
     }
 }
