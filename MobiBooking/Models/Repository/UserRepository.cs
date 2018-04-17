@@ -15,7 +15,7 @@ namespace MobiBooking.Models.Repository
 
         public IEnumerable<User> GetAll()
         {
-            return _db.Users;
+            return _db.Users.OrderBy(c => c.Lastname);
         }
 
         public User Get(int id)

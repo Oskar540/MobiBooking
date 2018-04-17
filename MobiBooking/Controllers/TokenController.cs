@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using MobiBooking.DTO;
 using MobiBooking.Models;
 using MobiBooking.Models.Repository;
 using MobiBooking.Services;
@@ -31,12 +32,6 @@ namespace MobiBooking.Controllers
             {
                 return Unauthorized();
             }
-        }
-
-        [HttpGet]
-        public User GetToken(int Id)
-        {
-            return _repo.Get(Id);
         }
     }
 }

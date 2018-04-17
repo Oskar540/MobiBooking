@@ -25,7 +25,7 @@ namespace MobiBooking.Controllers
         [HttpGet]
         public IEnumerable<User> GetAll()
         {
-            return _repo.GetAll().OrderBy(c => c.Name);
+            return _repo.GetAll();
         }
 
         // GET: api/User/5

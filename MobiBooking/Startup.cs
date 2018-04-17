@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using MobiBooking.DTO;
 using MobiBooking.IdentityModels;
 using MobiBooking.Models;
 using MobiBooking.Models.Repository;
@@ -33,6 +34,7 @@ namespace MobiBooking
         {
             services.AddTransient<IDefaultRepository<User>, UserRepository>();
             services.AddTransient<ITokenRepository<User>, TokenRepository>();
+
             services.AddDbContext<BookingDbContext>(opts =>
             opts.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
