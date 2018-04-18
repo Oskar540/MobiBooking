@@ -35,6 +35,7 @@ namespace MobiBooking
             services.AddTransient<IDefaultRepository<User>, UserRepository>();
             services.AddTransient<ITokenRepository<User>, TokenRepository>();
             services.AddTransient<IDefaultRepository<UserDto>, UserService>();
+            services.AddTransient<ITokenRepository<UserDto>, TokenService>();
 
             services.AddDbContext<BookingDbContext>(opts =>
             opts.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -68,6 +69,8 @@ namespace MobiBooking
                 options.DefaultPolicy = 
                 new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme)
                 .RequireAuthenticatedUser().Build();
+                options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
+
             });
 
             services.AddCors(options =>

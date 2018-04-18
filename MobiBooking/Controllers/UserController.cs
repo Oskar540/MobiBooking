@@ -11,14 +11,16 @@ namespace MobiBooking.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
-    [Authorize]
+    //[Authorize]
     public class UserController : Controller
     {
         private IDefaultRepository<UserDto> _repo;
+        private BookingDbContext _db;
 
-        public UserController(IDefaultRepository<UserDto> repo)
+        public UserController(IDefaultRepository<UserDto> repo, BookingDbContext db)
         {
             _repo = repo;
+            _db = db;
         }
         
         // GET: api/User

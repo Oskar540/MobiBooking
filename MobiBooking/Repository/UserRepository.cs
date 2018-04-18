@@ -33,10 +33,30 @@ namespace MobiBooking.Models.Repository
 
         public int Update(int id, User item)
         {
-            item.Id = id;
-            _db.Users.Attach(item);
+            //item.Id = id;
+            //_db.Users.Attach(item);
+            //_db.SaveChanges();
 
-            return item.Id;
+            //return item.Id;
+
+            var user = _db.Users.FirstOrDefault(c => c.Id == id);
+            try
+            {
+                user.Login = item.Login;
+                user.Password = item.Password;
+                user.Name = item.Name;
+                user.Lastname = item.Lastname;
+                user.Email = item.Email;
+                user.Status = item.Status;
+                user.Reservations = item.Reservations;
+                _db.SaveChanges();
+            }
+            catch
+            {
+                throw;
+            }
+
+            return user.Id;
         }
 
         public int Delete(int id)

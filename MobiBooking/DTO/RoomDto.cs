@@ -13,19 +13,11 @@ namespace MobiBooking.DTO
     public class RoomDto
     {
         public int Id { get; set; }
-
-        [Required]
         public string Name { get; set; }
-
-        [Required]
         public TimeOption EtimeOption { get; set; }
-
         public string Localization { get; set; }
         public bool IsActive { get; set; }
-
-        [Required]
         public int Capacity { get; set; }
-
         public bool IsReserved { get; set; }
         public BookStatus EbookStatus { get; set; }
     }

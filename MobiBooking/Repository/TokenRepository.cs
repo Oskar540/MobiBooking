@@ -37,8 +37,7 @@ namespace MobiBooking.Models.Repository
         private void BuildToken(User user)
         {
             var claims = new[] {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Name),
-            new Claim(JwtRegisteredClaimNames.Sub, user.Lastname),
+            new Claim(JwtRegisteredClaimNames.Sub, user.Login),
             new Claim(JwtRegisteredClaimNames.Email, user.Email),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
@@ -49,7 +48,7 @@ namespace MobiBooking.Models.Repository
             var token = new JwtSecurityToken(_config["Jwt:Issuer"],
               _config["Jwt:Audience"],
               claims,
-              expires: DateTime.Now.AddMinutes(30),
+              expires: DateTime.Now.AddMinutes(120),
               signingCredentials: creds);
         }
 

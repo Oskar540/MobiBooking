@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace MobiBooking.Models
 {
@@ -22,5 +23,15 @@ namespace MobiBooking.Models
         [Required]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
+
+        [Required]
+        public PropStatus Status { get; set; }
+
+        public List<Reservation> Reservations { get; set; }
+
+        public void BookRoom(Reservation reservation)
+        {
+            Reservations.Add(reservation);
+        }
     }
 }

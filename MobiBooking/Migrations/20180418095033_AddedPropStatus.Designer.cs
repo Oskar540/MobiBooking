@@ -11,9 +11,10 @@ using System;
 namespace MobiBooking.Migrations
 {
     [DbContext(typeof(BookingDbContext))]
-    partial class BookingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180418095033_AddedPropStatus")]
+    partial class AddedPropStatus
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -184,25 +185,13 @@ namespace MobiBooking.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("ExtraEquip");
+                    b.Property<int>("Capacity");
 
                     b.Property<DateTime>("From");
 
-                    b.Property<bool>("IsCycled");
-
-                    b.Property<int?>("RoomId");
-
-                    b.Property<string>("Title");
-
                     b.Property<DateTime>("To");
 
-                    b.Property<int?>("UserId");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("RoomId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Reservations");
                 });
@@ -250,7 +239,7 @@ namespace MobiBooking.Migrations
                     b.Property<string>("Password")
                         .IsRequired();
 
-                    b.Property<int>("Status");
+                    b.Property<int>("prop");
 
                     b.HasKey("Id");
 
@@ -300,17 +289,6 @@ namespace MobiBooking.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("MobiBooking.Models.Reservation", b =>
-                {
-                    b.HasOne("MobiBooking.Models.Room", "Room")
-                        .WithMany()
-                        .HasForeignKey("RoomId");
-
-                    b.HasOne("MobiBooking.Models.User")
-                        .WithMany("Reservations")
-                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }
