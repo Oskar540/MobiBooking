@@ -34,6 +34,7 @@ namespace MobiBooking
         {
             services.AddTransient<IDefaultRepository<User>, UserRepository>();
             services.AddTransient<ITokenRepository<User>, TokenRepository>();
+            services.AddTransient<IDefaultRepository<UserDto>, UserService>();
 
             services.AddDbContext<BookingDbContext>(opts =>
             opts.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -69,6 +70,15 @@ namespace MobiBooking
                 .RequireAuthenticatedUser().Build();
             });
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                      .AllowAnyMethod()
+                      .AllowAnyHeader()
+                      .AllowCredentials()
+                .Build());
+            });
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
@@ -100,6 +110,7 @@ namespace MobiBooking
             app.UseStaticFiles();
 
             app.UseAuthentication();
+            app.UseCors("CorsPolicy");
 
             if (env.IsDevelopment())
             {
@@ -129,10 +140,6 @@ namespace MobiBooking
                 ValidateAudience = true,
                 ValidAudience = audience
             };
-
-            
-
-            
 
             app.UseMvc();
         }

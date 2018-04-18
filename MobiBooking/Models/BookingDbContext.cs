@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace MobiBooking.Models
@@ -14,6 +15,7 @@ namespace MobiBooking.Models
         }
 
         public new DbSet<User> Users { get; set; }
+        public DbSet<IdentityUser> IdentityUsers { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
 

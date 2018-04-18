@@ -14,15 +14,15 @@ namespace MobiBooking.Controllers
     [AllowAnonymous]
     public class TokenController : Controller
     {
-        private ITokenRepository<User> _repo;
+        private ITokenRepository<UserDto> _repo;
 
-        public TokenController(ITokenRepository<User> repo)
+        public TokenController(ITokenRepository<UserDto> repo)
         {
             _repo = repo;
         }
 
         [HttpPost]
-        public IActionResult CreateToken([FromBody]User login)
+        public IActionResult CreateToken([FromBody]UserDto login)
         {
             if (_repo.Create(login) != null)
             {

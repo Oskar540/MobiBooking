@@ -38,6 +38,7 @@ namespace MobiBooking.Models.Repository
         {
             var claims = new[] {
             new Claim(JwtRegisteredClaimNames.Sub, user.Name),
+            new Claim(JwtRegisteredClaimNames.Sub, user.Lastname),
             new Claim(JwtRegisteredClaimNames.Email, user.Email),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };

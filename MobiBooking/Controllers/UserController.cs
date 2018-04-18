@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MobiBooking.DTO;
 using MobiBooking.Models;
 using MobiBooking.Models.Repository;
 using MobiBooking.Services;
@@ -10,49 +11,45 @@ namespace MobiBooking.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
-
+    [Authorize]
     public class UserController : Controller
     {
-        private IDefaultRepository<User> _repo;
+        private IDefaultRepository<UserDto> _repo;
 
-        public UserController(IDefaultRepository<User> repo)
+        public UserController(IDefaultRepository<UserDto> repo)
         {
             _repo = repo;
         }
-
-        [Authorize(Roles = "Admin")]
+        
         // GET: api/User
         [HttpGet]
-        public IEnumerable<User> GetAll()
+        public IEnumerable<UserDto> GetAll()
         {
             return _repo.GetAll();
         }
 
         // GET: api/User/5
-        [Authorize(Roles = "Admin")]
         [HttpGet("{id}")]
-        public User GetbyId(int id)
+        public UserDto GetbyId(int id)
         {
             return _repo.Get(id);
         }
 
         // POST: api/User
         [HttpPost]
-        public int PostNewUser([FromBody]User user)
+        public int PostNewUser([FromBody]UserDto user)
         {
             return _repo.Add(user);
         }
 
         // PUT: api/User/5
-        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
-        public int PutUserById(int id, [FromBody]User user)
+        public int PutUserById(int id, [FromBody]UserDto user)
         {
             return _repo.Update(user.Id, user);
         }
 
         // DELETE: api/ApiWithActions/5
-        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public int DeleteById(int id)
         {
