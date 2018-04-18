@@ -70,7 +70,7 @@ namespace MobiBooking.Models.Repository
             {
                 if (_db.Users.Any(i => i.Id != id))
                 {
-                    throw new NullReferenceException();
+                    throw new CustomException("User null, wrong parameter!");
                 }
                 else
                 {
