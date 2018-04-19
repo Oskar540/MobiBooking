@@ -17,6 +17,7 @@ using MobiBooking.Services;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MobiBooking
 {
@@ -64,6 +65,8 @@ namespace MobiBooking
            {
                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
            });
+
+
 
             services.AddAuthorization(options => {
                 options.DefaultPolicy = 

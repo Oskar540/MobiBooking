@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MobiBooking.DTO;
-using MobiBooking.Models;
 using MobiBooking.Models.Repository;
 using MobiBooking.Services;
 using System.Collections.Generic;
@@ -11,16 +10,14 @@ namespace MobiBooking.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
         private IDefaultRepository<UserDto> _repo;
-        private BookingDbContext _db;
 
-        public UserController(IDefaultRepository<UserDto> repo, BookingDbContext db)
+        public UserController(IDefaultRepository<UserDto> repo)
         {
             _repo = repo;
-            _db = db;
         }
         
         // GET: api/User

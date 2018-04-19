@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using MobiBooking.IdentityModels;
+using MobiBooking.Models.DataManager;
 using MobiBooking.Services;
 using System;
 using System.IdentityModel.Tokens.Jwt;

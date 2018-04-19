@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using MobiBooking.IdentityModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,10 +9,12 @@ namespace MobiBooking.Models.Repository
     public class UserRepository : IDefaultRepository<User>
     {
         private readonly BookingDbContext _db;
+        private readonly UserManager<User> _manager;
 
-        public UserRepository(BookingDbContext db)
+        public UserRepository(BookingDbContext db, UserManager<User> manager)
         {
             _db = db;
+            _manager = manager;
         }
 
         public IEnumerable<User> GetAll()
@@ -25,6 +29,8 @@ namespace MobiBooking.Models.Repository
 
         public int Add(User user)
         {
+            AssignToRoles(user);
+
             _db.Users.Add(user);
             _db.SaveChanges();
 
@@ -38,6 +44,8 @@ namespace MobiBooking.Models.Repository
             //_db.SaveChanges();
 
             //return item.Id;
+
+            AssignToRoles(item);
 
             var user = _db.Users.FirstOrDefault(c => c.Id == id);
             try
@@ -80,5 +88,19 @@ namespace MobiBooking.Models.Repository
 
             return id;
         }
+
+        private void AssignToRoles(User user)
+        {
+            if (user.Status == PropStatus.Admin)
+            {
+                _manager.AddToRoleAsync(user, "Admin");
+            }
+            else if (user.Status == PropStatus.User)
+            {
+                _manager.RemoveFromRoleAsync(user, "Admin");
+                _manager.AddToRoleAsync(user, "User");
+            }
+        }
+
     }
 }
