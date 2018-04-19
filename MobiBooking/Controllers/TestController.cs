@@ -14,11 +14,9 @@ namespace MobiBooking.Controllers
     public class TestController : Controller
     {
         private BookingDbContext _db;
-        //private UserManager<IdentityUser> _manager;
-        public TestController(BookingDbContext db/*, UserManager<IdentityUser> manager*/)
+        public TestController(BookingDbContext db)
         {
             _db = db;
-            //_manager = manager;
         }
 
         // GET: api/Test
