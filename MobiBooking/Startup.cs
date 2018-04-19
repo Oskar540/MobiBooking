@@ -16,6 +16,7 @@ using MobiBooking.Models.Repository;
 using MobiBooking.Services;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -41,7 +42,7 @@ namespace MobiBooking
             services.AddDbContext<BookingDbContext>(opts =>
             opts.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            {
+            
                 services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
@@ -56,7 +57,14 @@ namespace MobiBooking
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                 };
             });
-            }
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = "JwtBearer";
+                options.DefaultChallengeScheme = "JwtBearer";
+            });
+
+            
 
             services.AddMvc();
             services.AddAutoMapper(typeof(Startup));
@@ -75,6 +83,7 @@ namespace MobiBooking
                 options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
 
             });
+            
 
             services.AddCors(options =>
             {
@@ -85,7 +94,7 @@ namespace MobiBooking
                       .AllowCredentials()
                 .Build());
             });
-
+            
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                     // Password settings
@@ -107,6 +116,15 @@ namespace MobiBooking
             })
     .AddEntityFrameworkStores<BookingDbContext>()
     .AddDefaultTokenProviders();
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Events.OnRedirectToLogin = context =>
+                {
+                    context.Response.StatusCode = 401;
+                    return Task.CompletedTask;
+                };
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
