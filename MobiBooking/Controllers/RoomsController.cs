@@ -9,7 +9,7 @@ namespace MobiBooking.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
-    [Authorize]
+    //[Authorize]
     public class RoomsController : Controller
     {
         private readonly IDefaultRepository<RoomDto> _repo;
