@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using MobiBooking.Models;
+using MobiBooking.DTO;
 using MobiBooking.Models.Repository;
 using System.Collections.Generic;
 
@@ -11,44 +12,47 @@ namespace MobiBooking.Controllers
     [Authorize]
     public class RoomsController : Controller
     {
-        private readonly IDefaultRepository<Room> _repo;
+        private readonly IDefaultRepository<RoomDto> _repo;
 
-        public RoomsController(IDefaultRepository<Room> repo)
+        public RoomsController(IDefaultRepository<RoomDto> repo)
         {
             _repo = repo;
         }
 
         // GET: api/Rooms
         [HttpGet]
-        public IEnumerable<Room> GetRooms()
+        public IEnumerable<RoomDto> GetRooms()
         {
             return _repo.GetAll();
         }
 
         // GET: api/Rooms/5
         [HttpGet("{id}")]
-        public void GetRoom([FromRoute] int id)
+        public void GetRoom(int id)
         {
             _repo.Get(id);
         }
 
         // PUT: api/Rooms/5
         [HttpPut("{id}")]
-        public void PutRoom([FromRoute] int id, [FromBody] Room room)
+        [Authorize(Roles = "Admin")]
+        public void PutRoom(int id, [FromBody] RoomDto room)
         {
             _repo.Update(id, room);
         }
 
         // POST: api/Rooms
         [HttpPost]
-        public void PostRoom([FromBody] Room room)
+        [Authorize(Roles = "Admin")]
+        public void PostRoom([FromBody] RoomDto room)
         {
             _repo.Add(room);
         }
 
         // DELETE: api/Rooms/5
         [HttpDelete("{id}")]
-        public void DeleteRoom([FromRoute] int id)
+        [Authorize(Roles = "Admin")]
+        public void DeleteRoom(int id)
         {
             _repo.Delete(id);
         }

@@ -9,12 +9,12 @@ namespace MobiBooking.Models.Repository
     public class UserRepository : IDefaultRepository<User>
     {
         private readonly BookingDbContext _db;
-        private readonly UserManager<User> _manager;
+        //private readonly UserManager<User> _manager;
 
-        public UserRepository(BookingDbContext db, UserManager<User> manager)
+        public UserRepository(BookingDbContext db/*, UserManager<User> manager*/)
         {
             _db = db;
-            _manager = manager;
+            //_manager = manager;
         }
 
         public IEnumerable<User> GetAll()
@@ -29,7 +29,7 @@ namespace MobiBooking.Models.Repository
 
         public int Add(User user)
         {
-            AssignToRoles(user);
+            //AssignToRoles(user);
 
             _db.Users.Add(user);
             _db.SaveChanges();
@@ -45,7 +45,7 @@ namespace MobiBooking.Models.Repository
 
             //return item.Id;
 
-            AssignToRoles(item);
+            //AssignToRoles(item);
 
             var user = _db.Users.FirstOrDefault(c => c.Id == id);
             try
@@ -78,7 +78,7 @@ namespace MobiBooking.Models.Repository
             {
                 if (_db.Users.Any(i => i.Id != id))
                 {
-                    throw new CustomException("User null, wrong parameter!");
+                    throw new Exception("User null, wrong parameter!");
                 }
                 else
                 {
@@ -89,18 +89,18 @@ namespace MobiBooking.Models.Repository
             return id;
         }
 
-        private void AssignToRoles(User user)
-        {
-            if (user.Status == PropStatus.Admin)
-            {
-                _manager.AddToRoleAsync(user, "Admin");
-            }
-            else if (user.Status == PropStatus.User)
-            {
-                _manager.RemoveFromRoleAsync(user, "Admin");
-                _manager.AddToRoleAsync(user, "User");
-            }
-        }
+        //private void AssignToRoles(User user)
+        //{
+        //    if (user.Status == PropStatus.Admin)
+        //    {
+        //        _manager.AddToRoleAsync(user, "Admin");
+        //    }
+        //    else if (user.Status == PropStatus.User)
+        //    {
+        //        _manager.RemoveFromRoleAsync(user, "Admin");
+        //        _manager.AddToRoleAsync(user, "User");
+        //    }
+        //}
 
     }
 }

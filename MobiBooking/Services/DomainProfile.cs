@@ -13,6 +13,7 @@ namespace MobiBooking.Services
         public DomainProfile()
         {
             CreateMap<User, UserDto>().ReverseMap();
+            CreateMap<Room, RoomDto>().ReverseMap();
         }
     }
 }

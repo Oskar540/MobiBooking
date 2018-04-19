@@ -22,9 +22,10 @@ namespace MobiBooking.Controllers
         [HttpPost]
         public IActionResult CreateToken([FromBody]UserDto login)
         {
-            if (_repo.Create(login) != null)
+            var user = _repo.Create(login);
+            if (user != null)
             {
-                return Ok();
+                return Ok(user);
             }
             else
             {

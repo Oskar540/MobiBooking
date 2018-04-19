@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -16,7 +15,6 @@ using MobiBooking.Models.Repository;
 using MobiBooking.Services;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
-using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -36,8 +34,11 @@ namespace MobiBooking
         {
             services.AddTransient<IDefaultRepository<User>, UserRepository>();
             services.AddTransient<ITokenRepository<User>, TokenRepository>();
+            services.AddTransient<IDefaultRepository<Room>, RoomRepository>();
+
             services.AddTransient<IDefaultRepository<UserDto>, UserService>();
             services.AddTransient<ITokenRepository<UserDto>, TokenService>();
+            services.AddTransient<IDefaultRepository<RoomDto>, RoomService>();
 
             services.AddDbContext<BookingDbContext>(opts =>
             opts.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
