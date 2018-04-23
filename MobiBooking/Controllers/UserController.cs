@@ -3,12 +3,13 @@ using MobiBooking.DTO;
 using MobiBooking.Models.Repository;
 using System.Collections.Generic;
 using MobiBooking.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MobiBooking.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
         private IDefaultRepository<UserDto> _repo;

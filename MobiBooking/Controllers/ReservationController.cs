@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MobiBooking.DTO;
 using MobiBooking.Exceptions;
 using MobiBooking.Models.Repository;
@@ -8,6 +9,7 @@ namespace MobiBooking.Controllers
 {
     [Produces("application/json")]
     [Route("api/Reservation")]
+    //[Authorize]
     public class ReservationController : Controller
     {
         private readonly IDefaultRepository<ReservationDto> _repo;

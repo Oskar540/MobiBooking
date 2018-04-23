@@ -47,7 +47,7 @@ namespace MobiBooking.Models.Repository
 
         public IEnumerable<Room> GetAll()
         {
-            return _db.Rooms.OrderBy(c => c.Capacity);
+            return _db.Rooms.OrderBy(c => c.Name);
         }
 
         public int Update(int id, Room b)
