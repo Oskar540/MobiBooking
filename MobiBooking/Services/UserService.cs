@@ -14,8 +14,8 @@ namespace MobiBooking.Services
 
         public UserService(IMapper mapper, IDefaultRepository<User> repo)
         {
-            _repo = repo ?? throw new HttpResponseExceptionFilter(404, "Issue with connect to repository");
-            _mapper = mapper ?? throw new HttpResponseExceptionFilter(404, "Issue with connect to automapper");
+            _repo = repo ?? throw new HttpResponseException(503, "Issue with connect to repository");
+            _mapper = mapper ?? throw new HttpResponseException(503, "Issue with connect to automapper");
         }
 
         public IEnumerable<UserDto> GetAll()

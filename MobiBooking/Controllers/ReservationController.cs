@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MobiBooking.DTO;
+using MobiBooking.Exceptions;
 using MobiBooking.Models.Repository;
 using System.Collections.Generic;
 
@@ -13,7 +14,7 @@ namespace MobiBooking.Controllers
 
         public ReservationController(IDefaultRepository<ReservationDto> repo)
         {
-            _repo = repo;
+            _repo = repo ?? throw new HttpResponseException(503, "Issue with connect to repository");
         }
 
         // GET: api/Reservation

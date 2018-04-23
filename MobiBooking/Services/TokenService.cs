@@ -13,8 +13,8 @@ namespace MobiBooking.Services
 
         public TokenService(IMapper mapper, ITokenRepository<User> repo)
         {
-            _repo = repo ?? throw new HttpResponseExceptionFilter(404, "Issue with connect to repository");
-            _mapper = mapper ?? throw new HttpResponseExceptionFilter(404, "Issue with connect to automapper");
+            _repo = repo ?? throw new HttpResponseException(503, "Issue with connect to repository");
+            _mapper = mapper ?? throw new HttpResponseException(503, "Issue with connect to automapper");
         }
 
         public UserDto Create(UserDto user)

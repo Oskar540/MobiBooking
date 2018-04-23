@@ -14,8 +14,8 @@ namespace MobiBooking.Services
 
         public RoomService(IDefaultRepository<Room> repo, IMapper mapper)
         {
-            _repo = repo ?? throw new HttpResponseExceptionFilter(404, "Issue with connect to repository");
-            _mapper = mapper ?? throw new HttpResponseExceptionFilter(404, "Issue with connect to automapper");
+            _repo = repo ?? throw new HttpResponseException(503, "Issue with connect to repository");
+            _mapper = mapper ?? throw new HttpResponseException(503, "Issue with connect to automapper");
         }
 
         public int Add(RoomDto b)

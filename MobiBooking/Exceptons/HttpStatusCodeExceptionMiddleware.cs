@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace MobiBooking.Exceptions
 {
@@ -13,30 +15,29 @@ namespace MobiBooking.Exceptions
     {
         private readonly RequestDelegate _next;
 
-
         public HttpStatusCodeExceptionMiddleware(RequestDelegate next)
         {
             _next = next ?? throw new ArgumentNullException(nameof(next));
         }
 
-        public async Task Invoke(HttpContext httpContext)
+        public async Task Invoke(HttpContext context)
         {
             try
             {
-                await _next(httpContext);
+                await _next(context);
             }
-            catch (HttpResponseExceptionFilter ex)
+            catch (HttpResponseException ex)
             {
-                if(httpContext.Response.HasStarted)
+                if (context.Response.HasStarted)
                 {
                     throw;
                 }
 
-                httpContext.Response.Clear();
-                httpContext.Response.StatusCode = ex.StatusCode;
-                httpContext.Response.ContentType = ex.ContentType;
+                context.Response.Clear();
+                context.Response.StatusCode = ex.StatusCode;
+                context.Response.ContentType = ex.ContentType;
 
-                await httpContext.Response.WriteAsync(ex.Message);
+                await context.Response.WriteAsync(ex.Message);
 
                 return;
             }

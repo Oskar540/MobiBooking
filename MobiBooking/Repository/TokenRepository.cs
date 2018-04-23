@@ -16,8 +16,8 @@ namespace MobiBooking.Models.Repository
 
         public TokenRepository(BookingDbContext db, IConfiguration config)
         {
-            _db = db ?? throw new HttpResponseExceptionFilter(404, "Issue with connect to DataBase Context");
-            _config = config ?? throw new HttpResponseExceptionFilter(404, "Issue with connect to Configuration");
+            _db = db ?? throw new HttpResponseException(503, "Issue with connect to DataBase Context");
+            _config = config ?? throw new HttpResponseException(503, "Issue with connect to Configuration");
         }
 
         public User Create(User login)
@@ -26,12 +26,12 @@ namespace MobiBooking.Models.Repository
 
             if (user == null)
             {
-                throw new HttpResponseExceptionFilter(401, "Login or password missing!");
+                throw new HttpResponseException(401, "Login or password missing!");
             }
             else
             {
                 BuildToken(user);
-                throw new HttpResponseExceptionFilter(200, user);
+                throw new HttpResponseException(200, user);
             }
 
             //return user;

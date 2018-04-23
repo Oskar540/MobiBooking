@@ -129,12 +129,6 @@ namespace MobiBooking
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
         {
-            app.UseDefaultFiles();
-            app.UseStaticFiles();
-
-            app.UseAuthentication();
-            app.UseCors("CorsPolicy");
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -145,6 +139,12 @@ namespace MobiBooking
                 app.UseHttpStatusCodeException();
                 app.UseExceptionHandler();
             }
+
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+
+            app.UseAuthentication();
+            app.UseCors("CorsPolicy");
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>

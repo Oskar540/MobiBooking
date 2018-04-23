@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MobiBooking.DTO;
+using MobiBooking.Exceptions;
 using MobiBooking.Models.Repository;
 
 namespace MobiBooking.Controllers
@@ -14,21 +15,13 @@ namespace MobiBooking.Controllers
 
         public TokenController(ITokenRepository<UserDto> repo)
         {
-            _repo = repo;
+            _repo = repo ?? throw new HttpResponseException(503, "Issue with connect to repository");
         }
 
         [HttpPost]
-        public IActionResult CreateToken([FromBody]UserDto login)
+        public UserDto CreateToken([FromBody]UserDto login)
         {
-            var user = _repo.Create(login);
-            if (user != null)
-            {
-                return Ok(user);
-            }
-            else
-            {
-                return Unauthorized();
-            }
+            return _repo.Create(login);
         }
     }
 }
