@@ -2,7 +2,7 @@
 
 namespace MobiBooking.Models
 {
-    public enum ExtraExuipment { None, Flipchart, SoundSystem}
+    public enum ExtraExuipment { None, Flipchart, SoundSystem }
 
     public class Reservation
     {

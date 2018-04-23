@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MobiBooking.DTO;
 using MobiBooking.Models.Repository;
+using System.Collections.Generic;
 
 namespace MobiBooking.Controllers
 {
@@ -33,21 +29,21 @@ namespace MobiBooking.Controllers
         {
             return _repo.Get(id);
         }
-        
+
         // POST: api/Reservation
         [HttpPost]
         public int Post([FromBody]ReservationDto item)
         {
             return _repo.Add(item);
         }
-        
+
         // PUT: api/Reservation/5
         [HttpPut("{id}")]
         public int Put(int id, [FromBody]ReservationDto item)
         {
             return _repo.Update(id, item);
         }
-        
+
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public int Delete(int id)

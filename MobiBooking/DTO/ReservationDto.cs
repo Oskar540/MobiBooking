@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MobiBooking.DTO
 {
@@ -15,6 +12,6 @@ namespace MobiBooking.DTO
         public DateTime To { get; set; }
         public ExtraExuipment ExtraEquip { get; set; }
         public string Title { get; set; }
-        public bool IsCycled{ get; set; }
+        public bool IsCycled { get; set; }
     }
 }

@@ -1,10 +1,6 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using MobiBooking.IdentityModels;
-using MobiBooking.Models.DataManager;
-using MobiBooking.Services;
+using MobiBooking.Exceptions;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -20,33 +16,34 @@ namespace MobiBooking.Models.Repository
 
         public TokenRepository(BookingDbContext db, IConfiguration config)
         {
-            _db = db;
-            _config = config;
+            _db = db ?? throw new HttpResponseExceptionFilter(404, "Issue with connect to DataBase Context");
+            _config = config ?? throw new HttpResponseExceptionFilter(404, "Issue with connect to Configuration");
         }
 
         public User Create(User login)
         {
-
             var user = Authenticate(login);
 
-            if (user != null)
+            if (user == null)
+            {
+                throw new HttpResponseExceptionFilter(401, "Login or password missing!");
+            }
+            else
             {
                 BuildToken(user);
+                throw new HttpResponseExceptionFilter(200, user);
             }
 
-            return user;
-
+            //return user;
         }
 
         private void BuildToken(User user)
         {
-            
-
             var claims = new[] {
             new Claim(JwtRegisteredClaimNames.Sub, user.Login),
             new Claim(JwtRegisteredClaimNames.Email, user.Email),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new Claim(ClaimTypes.Role, user.Status.ToString())
+            new Claim("Role", user.Status.ToString())
         };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
@@ -57,6 +54,9 @@ namespace MobiBooking.Models.Repository
               claims,
               expires: DateTime.Now.AddMinutes(120),
               signingCredentials: creds);
+
+            //variable only for stack security token string in local variables
+            var printedToken = new JwtSecurityTokenHandler().WriteToken(token);
         }
 
         private User Authenticate(User login)

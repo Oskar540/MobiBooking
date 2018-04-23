@@ -1,9 +1,8 @@
-﻿using MobiBooking.Models;
+﻿using MobiBooking.Exceptions;
+using MobiBooking.Models;
 using MobiBooking.Models.Repository;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace MobiBooking.Repository
 {
@@ -13,7 +12,7 @@ namespace MobiBooking.Repository
 
         public ReservationRepository(BookingDbContext db)
         {
-            _db = db;
+            _db = db ?? throw new HttpResponseExceptionFilter(404, "Issue with connect to DataBase Context");
         }
 
         public int Add(Reservation b)
@@ -32,14 +31,21 @@ namespace MobiBooking.Repository
             }
             catch
             {
-                throw;
+                throw new HttpResponseExceptionFilter(404, "Can't find reservation with this identifier!");
+
             }
             return id;
         }
 
         public Reservation Get(int id)
         {
-            return _db.Reservations.FirstOrDefault(c => c.Id == id);
+            var res = _db.Reservations.FirstOrDefault(c => c.Id == id);
+            if(res == null)
+            {
+                throw new HttpResponseExceptionFilter(404, "Can't find reservation with this identifier!");
+
+            }
+            return res;
         }
 
         public IEnumerable<Reservation> GetAll()
@@ -49,10 +55,16 @@ namespace MobiBooking.Repository
 
         public int Update(int id, Reservation b)
         {
-            b.Id = id;
-            _db.Reservations.Attach(b);
-            _db.SaveChanges();
-
+            try
+            {
+                b.Id = id;
+                _db.Reservations.Attach(b);
+                _db.SaveChanges();
+            }
+            catch
+            {
+                throw new HttpResponseExceptionFilter(400, "Invalid sended data!");
+            }
             return b.Id;
         }
     }

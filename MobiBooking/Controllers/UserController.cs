@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MobiBooking.DTO;
 using MobiBooking.Models.Repository;
-using MobiBooking.Services;
 using System.Collections.Generic;
-using System.Linq;
+using MobiBooking.Exceptions;
 
 namespace MobiBooking.Controllers
 {
@@ -19,7 +17,7 @@ namespace MobiBooking.Controllers
         {
             _repo = repo;
         }
-        
+
         // GET: api/User
         [HttpGet]
         public IEnumerable<UserDto> GetAll()
@@ -43,9 +41,11 @@ namespace MobiBooking.Controllers
 
         // PUT: api/User/5
         [HttpPut("{id}")]
-        public int PutUserById(int id, [FromBody]UserDto user)
+        public int PutUserById(int id, [FromBody]UserDto item)
         {
-            return _repo.Update(user.Id, user);
+            int userId = _repo.Update(item.Id, item);
+
+            return userId;
         }
 
         // DELETE: api/ApiWithActions/5

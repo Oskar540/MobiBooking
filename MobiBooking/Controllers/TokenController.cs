@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using MobiBooking.DTO;
 using MobiBooking.Models.Repository;
-using MobiBooking.Services;
 
 namespace MobiBooking.Controllers
 {

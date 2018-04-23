@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using MobiBooking.IdentityModels;
+﻿using MobiBooking.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +11,7 @@ namespace MobiBooking.Models.Repository
 
         public UserRepository(BookingDbContext db)
         {
-            _db = db;
+            _db = db ?? throw new HttpResponseExceptionFilter(404, "Issue with connect to DataBase Context");
         }
 
         public IEnumerable<User> GetAll()
@@ -22,11 +21,20 @@ namespace MobiBooking.Models.Repository
 
         public User Get(int id)
         {
-            return _db.Users.FirstOrDefault(c => c.Id == id);
+            var user = _db.Users.FirstOrDefault(c => c.Id == id);
+            if (user == null)
+            {
+                throw new HttpResponseExceptionFilter(404, "Can't find user with this identifier!");
+            }
+            return user;
         }
 
         public int Add(User user)
         {
+            if(user == null)
+            {
+                throw new HttpResponseExceptionFilter(400, "Invalid sended data!");
+            }
             _db.Users.Add(user);
             _db.SaveChanges();
 
@@ -35,14 +43,6 @@ namespace MobiBooking.Models.Repository
 
         public int Update(int id, User item)
         {
-            //item.Id = id;
-            //_db.Users.Attach(item);
-            //_db.SaveChanges();
-
-            //return item.Id;
-
-            //AssignToRoles(item);
-
             var user = _db.Users.FirstOrDefault(c => c.Id == id);
             try
             {
@@ -57,7 +57,7 @@ namespace MobiBooking.Models.Repository
             }
             catch
             {
-                throw;
+                throw new HttpResponseExceptionFilter(400, "Invalid sended data!");
             }
 
             return user.Id;
@@ -72,14 +72,7 @@ namespace MobiBooking.Models.Repository
             }
             catch
             {
-                if (_db.Users.Any(i => i.Id != id))
-                {
-                    throw new Exception("User null, wrong parameter!");
-                }
-                else
-                {
-                    throw;
-                }
+                throw new HttpResponseExceptionFilter(404, "Can't find user with this identifier!");
             }
 
             return id;

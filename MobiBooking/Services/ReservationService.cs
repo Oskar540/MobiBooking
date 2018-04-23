@@ -1,11 +1,7 @@
 ﻿using AutoMapper;
 using MobiBooking.DTO;
-using MobiBooking.Models;
 using MobiBooking.Models.Repository;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MobiBooking.Services
 {
@@ -13,6 +9,7 @@ namespace MobiBooking.Services
     {
         private readonly IDefaultRepository<ReservationDto> _repo;
         private readonly IMapper _mapper;
+
         public ReservationService(IDefaultRepository<ReservationDto> repo, IMapper mapper)
         {
             _repo = repo;
