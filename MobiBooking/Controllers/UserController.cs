@@ -1,25 +1,24 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MobiBooking.DTO;
 using MobiBooking.Models.Repository;
-using MobiBooking.Services;
 using System.Collections.Generic;
-using System.Linq;
+using MobiBooking.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MobiBooking.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
         private IDefaultRepository<UserDto> _repo;
 
         public UserController(IDefaultRepository<UserDto> repo)
         {
-            _repo = repo;
+            _repo = repo ?? throw new HttpResponseException(503, "Issue with connect to repository");
         }
-        
+
         // GET: api/User
         [HttpGet]
         public IEnumerable<UserDto> GetAll()
@@ -43,9 +42,11 @@ namespace MobiBooking.Controllers
 
         // PUT: api/User/5
         [HttpPut("{id}")]
-        public int PutUserById(int id, [FromBody]UserDto user)
+        public int PutUserById(int id, [FromBody]UserDto item)
         {
-            return _repo.Update(user.Id, user);
+            int userId = _repo.Update(item.Id, item);
+
+            return userId;
         }
 
         // DELETE: api/ApiWithActions/5

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
+﻿using MobiBooking.Exceptions;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,7 +10,8 @@ namespace MobiBooking.Models.Repository
 
         public RoomRepository(BookingDbContext db)
         {
-            _db = db;
+            _db = db ?? throw new HttpResponseException(503, "Issue with connect to DataBase Context");
+
         }
 
         public int Add(Room b)
@@ -30,27 +30,38 @@ namespace MobiBooking.Models.Repository
             }
             catch
             {
-                throw;
+                throw new HttpResponseException(404, "Can't find room with this identifier!");
             }
             return id;
         }
 
         public Room Get(int id)
         {
-            return _db.Rooms.FirstOrDefault(c => c.Id == id);
+            var room = _db.Rooms.FirstOrDefault(c => c.Id == id);
+            if(room == null)
+            {
+                throw new HttpResponseException(404, "Can't find room with this identifier!");
+            }
+            return room;
         }
 
         public IEnumerable<Room> GetAll()
         {
-            return _db.Rooms.OrderBy(c => c.Capacity);
+            return _db.Rooms.OrderBy(c => c.Name);
         }
 
         public int Update(int id, Room b)
         {
-            b.Id = id;
-            _db.Rooms.Attach(b);
-            _db.SaveChanges();
-
+            try
+            {
+                b.Id = id;
+                _db.Rooms.Attach(b);
+                _db.SaveChanges();
+            }
+            catch
+            {
+                throw new HttpResponseException(400, "Invalid sended data!");
+            }
             return b.Id;
         }
     }

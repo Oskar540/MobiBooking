@@ -1,8 +1,4 @@
-﻿using MobiBooking.Models.Repository;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace MobiBooking.Models.DataManager
+﻿namespace MobiBooking.Models.DataManager
 {
     //public class UserManager : IDefaultRepository<User>
     //{

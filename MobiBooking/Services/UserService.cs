@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
 using MobiBooking.DTO;
+using MobiBooking.Exceptions;
 using MobiBooking.Models;
 using MobiBooking.Models.Repository;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MobiBooking.Services
 {
@@ -16,10 +14,10 @@ namespace MobiBooking.Services
 
         public UserService(IMapper mapper, IDefaultRepository<User> repo)
         {
-            _mapper = mapper;
-            _repo = repo;
+            _repo = repo ?? throw new HttpResponseException(503, "Issue with connect to repository");
+            _mapper = mapper ?? throw new HttpResponseException(503, "Issue with connect to automapper");
         }
-        
+
         public IEnumerable<UserDto> GetAll()
         {
             return _mapper.Map<IEnumerable<UserDto>>(_repo.GetAll());
@@ -37,7 +35,7 @@ namespace MobiBooking.Services
 
         public int Update(int id, UserDto item)
         {
-           return _repo.Update(id, _mapper.Map<User>(item));
+            return _repo.Update(id, _mapper.Map<User>(item));
         }
 
         public int Delete(int id)

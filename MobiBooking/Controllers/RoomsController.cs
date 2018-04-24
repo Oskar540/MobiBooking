@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MobiBooking.DTO;
+using MobiBooking.Exceptions;
 using MobiBooking.Models.Repository;
 using System.Collections.Generic;
 
@@ -9,14 +9,14 @@ namespace MobiBooking.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
-    //[Authorize]
+    [Authorize]
     public class RoomsController : Controller
     {
         private readonly IDefaultRepository<RoomDto> _repo;
 
         public RoomsController(IDefaultRepository<RoomDto> repo)
         {
-            _repo = repo;
+            _repo = repo ?? throw new HttpResponseException(503, "Issue with connect to repository");
         }
 
         // GET: api/Rooms
