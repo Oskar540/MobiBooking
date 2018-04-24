@@ -31,8 +31,9 @@ namespace MobiBooking.Controllers
 
         // POST: api/Test
         [HttpPost]
-        public void Post([FromBody]string value)
+        public string Post([FromBody]logowanie logs)
         {
+            return "Witaj " + logs.login.ToString() + " " + logs.password.ToString() + "!!!";
         }
 
         // PUT: api/Test/5
@@ -45,6 +46,12 @@ namespace MobiBooking.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+        }
+
+        public class logowanie
+        {
+            public string login { get; set; }
+            public string password { get; set; }
         }
     }
 }

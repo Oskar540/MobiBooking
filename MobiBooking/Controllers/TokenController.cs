@@ -18,7 +18,15 @@ namespace MobiBooking.Controllers
             _repo = repo ?? throw new HttpResponseException(503, "Issue with connect to repository");
         }
 
+        //[HttpGet]
+        //[Route("/login")]
+        //public string GetLoginUser(string login, string password)
+        //{
+        //    return "Hello " + _repo.GetLoginUser(login, password).Name;
+        //}
+
         [HttpPost]
+        [Route("/login")]
         public UserDto CreateToken([FromBody]UserDto login)
         {
             return _repo.Create(login);

@@ -16,10 +16,15 @@ namespace MobiBooking.Services
             _repo = repo ?? throw new HttpResponseException(503, "Issue with connect to repository");
             _mapper = mapper ?? throw new HttpResponseException(503, "Issue with connect to automapper");
         }
-
+        
         public UserDto Create(UserDto user)
         {
             return _mapper.Map<UserDto>(_repo.Create(_mapper.Map<User>(user)));
+        }
+
+        public UserDto GetLoginUser(string login, string password)
+        {
+            return _mapper.Map<UserDto>(_repo.GetLoginUser(login, password));
         }
     }
 }
