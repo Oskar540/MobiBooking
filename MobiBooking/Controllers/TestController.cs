@@ -23,17 +23,17 @@ namespace MobiBooking.Controllers
         }
 
         // GET: api/Test/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        [HttpGet("{value}")]
+        public string Get(string value)
         {
-            return _db.Users.FirstOrDefault(c => c.Id == id).Status.ToString(); ;
+            return "Value: " + value.ToString();
         }
 
         // POST: api/Test
         [HttpPost]
-        public string Post([FromBody]logowanie logs)
+        public string Post([FromBody]string value)
         {
-            return "Witaj " + logs.login.ToString() + " " + logs.password.ToString() + "!!!";
+            return "Witaj " + value + "!!!";
         }
 
         // PUT: api/Test/5
@@ -46,12 +46,6 @@ namespace MobiBooking.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-        }
-
-        public class logowanie
-        {
-            public string login { get; set; }
-            public string password { get; set; }
         }
     }
 }

@@ -35,7 +35,7 @@ namespace MobiBooking.Exceptions
 
                 context.Response.Clear();
                 context.Response.StatusCode = ex.StatusCode;
-                context.Response.ContentType = ex.ContentType;
+                context.Response.ContentType = @"application/json";
 
                 await context.Response.WriteAsync(ex.Message);
 

@@ -21,10 +21,5 @@ namespace MobiBooking.Services
         {
             return _mapper.Map<UserDto>(_repo.Create(_mapper.Map<User>(user)));
         }
-
-        public UserDto GetLoginUser(string login, string password)
-        {
-            return _mapper.Map<UserDto>(_repo.GetLoginUser(login, password));
-        }
     }
 }

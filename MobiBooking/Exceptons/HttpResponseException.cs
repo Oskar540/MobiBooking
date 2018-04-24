@@ -8,7 +8,7 @@ namespace MobiBooking.Exceptions
     public class HttpResponseException : Exception
     {
         public int StatusCode { get; set; }
-        public string ContentType { get; set; }
+        public string ContentType { get; set; } = @"application/json";
 
         public HttpResponseException(int statusCode)
         {

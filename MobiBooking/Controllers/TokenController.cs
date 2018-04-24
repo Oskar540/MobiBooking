@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using MobiBooking.DTO;
 using MobiBooking.Exceptions;
@@ -17,13 +18,6 @@ namespace MobiBooking.Controllers
         {
             _repo = repo ?? throw new HttpResponseException(503, "Issue with connect to repository");
         }
-
-        //[HttpGet]
-        //[Route("/login")]
-        //public string GetLoginUser(string login, string password)
-        //{
-        //    return "Hello " + _repo.GetLoginUser(login, password).Name;
-        //}
 
         [HttpPost]
         [Route("/login")]

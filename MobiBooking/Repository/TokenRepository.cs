@@ -63,10 +63,5 @@ namespace MobiBooking.Models.Repository
         {
             return _db.Users.FirstOrDefault(c => c.Login == login.Login && c.Password == login.Password);
         }
-
-        public User GetLoginUser(string login, string password)
-        {
-            return _db.Users.FirstOrDefault(c => c.Login == login && c.Password == password);
-        }
     }
 }
