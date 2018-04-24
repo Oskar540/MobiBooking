@@ -144,11 +144,9 @@ namespace MobiBooking
             app.UseStaticFiles();
 
             app.UseAuthentication();
-            app.UseCors(builder => builder
-            .AllowAnyOrigin()
-            .AllowAnyMethod()
-            .AllowAnyHeader()
-            .AllowCredentials());
+
+            
+            app.UseCors("CorsPolicy");
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>

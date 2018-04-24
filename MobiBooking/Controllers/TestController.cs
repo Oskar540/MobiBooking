@@ -23,10 +23,10 @@ namespace MobiBooking.Controllers
         }
 
         // GET: api/Test/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        [HttpGet("{id}")]
+        public string Get(string id)
         {
-            return _db.Users.FirstOrDefault(c => c.Id == id).Status.ToString(); ;
+            return "Value: " + id.ToString();
         }
 
         // POST: api/Test
