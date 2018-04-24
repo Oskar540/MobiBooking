@@ -15,6 +15,16 @@ namespace MobiBooking.DTO
         public PropStatus Status { get; set; }
         public List<ReservationDto> Reservations { get; set; }
 
+        public double MeetingsCurrentWeek { get; set; }
+        public double MeetingsPastWeek { get; set; }
+        public double MeetingsCurrentMonth { get; set; }
+        public double MeetingsPastMonth { get; set; }
+
+        public int ReservationCurrentWeek { get; set; }
+        public int ReservationPastWeek { get; set; }
+        public int ReservationCurrentMonth { get; set; }
+        public int ReservationPastMonth { get; set; }
+
         public void BookRoom(ReservationDto reservation)
         {
             Reservations.Add(reservation);
