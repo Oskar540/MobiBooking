@@ -46,137 +46,56 @@ namespace MobiBooking.Models
             Reservations.Add(reservation);
         }
 
-        public void CurrentWeek(User user, List<Reservation> res)
+        public void CurrentWeek(User user)
+        {
+            DateTime startOfWeek = DateTime.Today.AddDays((int)(DateTime.Today.DayOfWeek) * -1).AddDays(1);
+            DateTime endOfWeek = startOfWeek.AddDays(6);
+
+            
+            var stats = foo(startOfWeek, endOfWeek, user);
+
+            user.ReservationCurrentWeek = stats.Item1;
+            user.MeetingsCurrentWeek = stats.Item2;
+
+            
+            DateTime pastStartWeek = startOfWeek.AddDays(-7);
+            DateTime pastEndWeek = startOfWeek.AddDays(-1);
+
+            stats = foo(pastStartWeek, pastEndWeek, user);
+
+            user.ReservationPastWeek = stats.Item1;
+            user.MeetingsPastWeek = stats.Item2;
+
+            
+            DateTime StartMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            DateTime EndMonth = StartMonth.AddMonths(1).AddTicks(-1);
+
+            stats = foo(StartMonth, EndMonth, user);
+
+            user.ReservationCurrentMonth = stats.Item1;
+            user.MeetingsCurrentMonth = stats.Item2;
+           
+            
+            DateTime PastStartMonth = StartMonth.AddMonths(-1);
+            DateTime PastEndMonth = EndMonth.AddMonths(1).AddTicks(-1);
+
+            stats = foo(PastStartMonth, PastEndMonth, user);
+
+            user.ReservationPastMonth = stats.Item1;
+            user.MeetingsPastMonth = stats.Item2;
+        }
+
+        private Tuple<int, double> foo(DateTime startDate, DateTime endDate, User user)
         {
             int days = new int();
             double hours = new double();
             List<Reservation> tempReservationsList = new List<Reservation>();
-            DateTime startOfWeek = DateTime.Today.AddDays((int)(DateTime.Today.DayOfWeek) * -1).AddDays(1);
-            DateTime endOfWeek = startOfWeek.AddDays(6);
-
-            //sprawdza ktore rejestracje sali mieszczą się w obecnym tygodniu początek lub koniec
-            foreach (var item in res)
-            {
-                if ((item.From >= startOfWeek && item.From <= endOfWeek) ||
-                    item.To >= startOfWeek && item.To <= endOfWeek)
-                {
-                    tempReservationsList.Add(item);
-                }
-            }
-
-            /*
-             Z reszty dni z przedziałów from-to wyciąg dni tylko z tego tygodnia
-             Z wyciągniętych dni wyciąg tylko zarezerwowane godziny
-            */
-
-
-            foreach (var item in tempReservationsList)
-            {
-                int daysOfReservation = (item.To - item.From).Days + 1;
-
-                //odcięcie dni przed obecnym tygodniem z rezerwacji
-                if (item.From < startOfWeek)
-                {
-                    daysOfReservation -= (startOfWeek - item.From).Days;
-                }
-
-                //odcięcie dni po obecnym tygodniu z rezerwacji
-                if (item.To > endOfWeek)
-                {
-                    daysOfReservation -= (item.To - endOfWeek).Days;
-                }
-
-                days += daysOfReservation;
-
-                switch (item.Room.EtimeOption)
-                {
-                    case TimeOption.timeSet1:
-                        hours += days * 8;
-                        break;
-                    case TimeOption.timeSet2:
-                        hours += days * 11;
-                        break;
-                    case TimeOption.timeSet3:
-                        hours += days * 13;
-                        break;
-                    default:
-                        break;
-                }
-            }
-            user.MeetingsCurrentWeek = hours;
-            user.ReservationCurrentWeek = days;
-
-
-            tempReservationsList.Clear();
-            hours = 0;
-            days = 0;
-            DateTime pastStartWeek = startOfWeek.AddDays(-7);
-            DateTime pastEndWeek = startOfWeek.AddDays(-1);
-
-            //sprawdza ktore rejestracje sali mieszczą się w poprzednim tygodniu początek lub koniec
-            foreach (var item in res)
-            {
-                if ((item.From >= startOfWeek && item.From <= endOfWeek) ||
-                    item.To >= startOfWeek && item.To <= endOfWeek)
-                {
-                    tempReservationsList.Add(item);
-                }
-            }
-
-            /*
-             Z reszty dni z przedziałów from-to wyciąg dni tylko z tego tygodnia
-             Z wyciągniętych dni wyciąg tylko zarezerwowane godziny
-            */
-
-
-            foreach (var item in tempReservationsList)
-            {
-                int daysOfReservation = (item.To - item.From).Days + 1;
-
-                //odcięcie dni przed poprzednim tygodniem z rezerwacji
-                if (item.From < pastStartWeek)
-                {
-                    daysOfReservation -= (pastStartWeek - item.From).Days;
-                }
-
-                //odcięcie dni po poprzednim tygodniu z rezerwacji
-                if (item.To > pastEndWeek)
-                {
-                    daysOfReservation -= (item.To - pastEndWeek).Days;
-                }
-
-                days += daysOfReservation;
-
-                switch (item.Room.EtimeOption)
-                {
-                    case TimeOption.timeSet1:
-                        hours += days * 8;
-                        break;
-                    case TimeOption.timeSet2:
-                        hours += days * 11;
-                        break;
-                    case TimeOption.timeSet3:
-                        hours += days * 13;
-                        break;
-                    default:
-                        break;
-                }
-            }
-            user.MeetingsPastWeek = hours;
-            user.ReservationPastWeek = days;
-
-
-            tempReservationsList.Clear();
-            hours = 0;
-            days = 0;
-            DateTime StartMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-            DateTime EndMonth = StartMonth.AddMonths(1).AddTicks(-1);
 
             //sprawdza ktore rejestracje sali mieszczą się w obecnym miesiącu początek lub koniec
-            foreach (var item in res)
+            foreach (var item in user.Reservations)
             {
-                if ((item.From >= StartMonth && item.From <= EndMonth) ||
-                    item.To >= StartMonth && item.To <= EndMonth)
+                if ((item.From >= startDate && item.From <= endDate) ||
+                    item.To >= startDate && item.To <= endDate)
                 {
                     tempReservationsList.Add(item);
                 }
@@ -187,70 +106,15 @@ namespace MobiBooking.Models
                 int daysOfReservation = (item.To - item.From).Days + 1;
 
                 //odcięcie dni przed poprzednim tygodniem z rezerwacji
-                if (item.From < StartMonth)
+                if (item.From < startDate)
                 {
-                    daysOfReservation -= (StartMonth - item.From).Days;
+                    daysOfReservation -= (startDate - item.From).Days;
                 }
 
                 //odcięcie dni po poprzednim tygodniu z rezerwacji
-                if (item.To > EndMonth)
+                if (item.To > endDate)
                 {
-                    daysOfReservation -= (item.To - EndMonth).Days;
-                }
-
-                days += daysOfReservation;
-
-                switch (item.Room.EtimeOption)
-                {
-                    case TimeOption.timeSet1:
-                        hours += days * 8;
-                        break;
-                    case TimeOption.timeSet2:
-                        hours += days * 11;
-                        break;
-                    case TimeOption.timeSet3:
-                        hours += days * 13;
-                        break;
-                    default:
-                        break;
-                }
-
-
-            }
-            user.MeetingsCurrentMonth = hours;
-            user.ReservationCurrentMonth = days;
-
-
-            tempReservationsList.Clear();
-            hours = 0;
-            days = 0;
-            DateTime PastStartMonth = StartMonth.AddMonths(-1);
-            DateTime PastEndMonth = EndMonth.AddMonths(1).AddTicks(-1);
-
-            //sprawdza ktore rejestracje sali mieszczą się w obecnym miesiącu początek lub koniec
-            foreach (var item in res)
-            {
-                if ((item.From >= PastStartMonth && item.From <= PastEndMonth) ||
-                    item.To >= PastStartMonth && item.To <= PastEndMonth)
-                {
-                    tempReservationsList.Add(item);
-                }
-            }
-
-            foreach (var item in tempReservationsList)
-            {
-                int daysOfReservation = (item.To - item.From).Days + 1;
-
-                //odcięcie dni przed poprzednim tygodniem z rezerwacji
-                if (item.From < PastStartMonth)
-                {
-                    daysOfReservation -= (PastStartMonth - item.From).Days;
-                }
-
-                //odcięcie dni po poprzednim tygodniu z rezerwacji
-                if (item.To > PastEndMonth)
-                {
-                    daysOfReservation -= (item.To - PastEndMonth).Days;
+                    daysOfReservation -= (item.To - endDate).Days;
                 }
 
                 days += daysOfReservation;
@@ -270,8 +134,8 @@ namespace MobiBooking.Models
                         break;
                 }
             }
-            user.MeetingsPastMonth = hours;
-            user.ReservationPastMonth = days;
+
+            return Tuple.Create(days, hours);
         }
     }
 }
