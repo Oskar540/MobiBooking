@@ -31,10 +31,9 @@ namespace MobiBooking.Models.Repository
             else
             {
                 BuildToken(user);
-                throw new HttpResponseException(200, user);
             }
 
-            //return user;
+            return user;
         }
 
         private void BuildToken(User user)
