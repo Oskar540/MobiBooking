@@ -9,7 +9,7 @@ namespace MobiBooking.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
-    [Authorize]
+    //[Authorize]
     public class RoomsController : Controller
     {
         private readonly IDefaultRepository<RoomDto> _repo;
@@ -43,7 +43,7 @@ namespace MobiBooking.Controllers
 
         // POST: api/Rooms
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public void PostRoom([FromBody] RoomDto room)
         {
             _repo.Add(room);

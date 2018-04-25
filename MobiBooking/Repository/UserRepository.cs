@@ -22,10 +22,12 @@ namespace MobiBooking.Models.Repository
         public User Get(int id)
         {
             var user = _db.Users.FirstOrDefault(c => c.Id == id);
+            user.ActualizeWeekMonthStatistics(user);
             if (user == null)
             {
                 throw new HttpResponseException(404, "Can't find user with this identifier!");
             }
+
             return user;
         }
 
@@ -44,6 +46,10 @@ namespace MobiBooking.Models.Repository
         public int Update(int id, User item)
         {
             var user = _db.Users.FirstOrDefault(c => c.Id == id);
+            if(user == null)
+            {
+                throw new HttpResponseException(404, "Can't find user with this identifier!");
+            }
             try
             {
                 user.Login = item.Login;
@@ -52,7 +58,6 @@ namespace MobiBooking.Models.Repository
                 user.Lastname = item.Lastname;
                 user.Email = item.Email;
                 user.Status = item.Status;
-                user.Reservations = item.Reservations;
                 _db.SaveChanges();
             }
             catch
@@ -70,11 +75,9 @@ namespace MobiBooking.Models.Repository
             {
                 throw new HttpResponseException(404, "Can't find user with this identifier!");
             }
-
-                _db.Users.Remove(new User() { Id = id });
-                _db.SaveChanges();
+            _db.Users.Remove(user);
+            _db.SaveChanges();
             
-
             return id;
         }
     }

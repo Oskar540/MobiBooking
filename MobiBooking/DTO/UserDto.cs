@@ -14,6 +14,7 @@ namespace MobiBooking.DTO
         public string Lastname { get; set; }
         public PropStatus Status { get; set; }
         public List<ReservationDto> Reservations { get; set; }
+        public List<ReservationDto> Invitings { get; set; }
         public double MeetingsCurrentWeek { get; set; }
         public double MeetingsPastWeek { get; set; }
         public double MeetingsCurrentMonth { get; set; }

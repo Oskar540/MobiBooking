@@ -22,7 +22,7 @@ namespace MobiBooking.Models
         [Required]
         public int Capacity { get; set; }
 
-        public bool IsReserved { get; set; }
+        public bool IsReserved { get; set; } = false;
         public BookStatus EbookStatus { get; set; }
     }
 }

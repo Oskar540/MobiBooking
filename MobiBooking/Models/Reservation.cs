@@ -13,6 +13,6 @@ namespace MobiBooking.Models
         public DateTime To { get; set; }
         public ExtraEquipment ExtraEquip { get; set; }
         public string Title { get; set; }
-        public bool IsCycled { get; set; }
+        public bool IsCycled { get; set; } = false;
     }
 }

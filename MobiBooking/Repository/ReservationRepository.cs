@@ -17,6 +17,7 @@ namespace MobiBooking.Repository
 
         public int Add(Reservation b)
         {
+            b.Room = _db.Rooms.FirstOrDefault(c => c.Id == b.Room.Id);
             _db.Reservations.Add(b);
             _db.SaveChanges();
             return b.Id;
@@ -42,7 +43,6 @@ namespace MobiBooking.Repository
             if(reservation == null)
             {
                 throw new HttpResponseException(404, "Can't find reservation with this identifier!");
-
             }
 
             return reservation;
@@ -53,19 +53,28 @@ namespace MobiBooking.Repository
             return _db.Reservations.OrderBy(c => c.From);
         }
 
-        public int Update(int id, Reservation b)
+        public int Update(int id, Reservation item)
         {
+            var reservation = _db.Reservations.FirstOrDefault(c => c.Id == id);
+            if (reservation == null)
+            {
+                throw new HttpResponseException(404, "Can't find reservation with this identifier!");
+            }
             try
             {
-                b.Id = id;
-                _db.Reservations.Attach(b);
+                reservation.Room = _db.Rooms.FirstOrDefault(c => c.Id == item.Room.Id);
+                reservation.From = item.From;
+                reservation.To = item.To;
+                reservation.ExtraEquip = item.ExtraEquip;
+                reservation.Title = item.Title;
+                reservation.IsCycled = item.IsCycled;
                 _db.SaveChanges();
             }
             catch
             {
                 throw new HttpResponseException(400, "Invalid sended data!");
             }
-            return b.Id;
+            return reservation.Id;
         }
     }
 }

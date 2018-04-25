@@ -21,7 +21,9 @@ namespace MobiBooking.Exceptions
             this.ContentType = message;
         }
 
-        public HttpResponseException(int statusCode, Exception inner) : this(statusCode, inner.ToString()) { }
+        public HttpResponseException(int statusCode, Exception inner) : this(statusCode, inner.ToString())
+        {
+        }
 
         public HttpResponseException(int statusCode, Object errorObject) : this(statusCode, errorObject.ToString())
         {

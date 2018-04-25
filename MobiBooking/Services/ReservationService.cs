@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MobiBooking.DTO;
 using MobiBooking.Exceptions;
+using MobiBooking.Models;
 using MobiBooking.Models.Repository;
 using System.Collections.Generic;
 
@@ -8,10 +9,10 @@ namespace MobiBooking.Services
 {
     public class ReservationService : IDefaultRepository<ReservationDto>
     {
-        private readonly IDefaultRepository<ReservationDto> _repo;
+        private readonly IDefaultRepository<Reservation> _repo;
         private readonly IMapper _mapper;
 
-        public ReservationService(IDefaultRepository<ReservationDto> repo, IMapper mapper)
+        public ReservationService(IDefaultRepository<Reservation> repo, IMapper mapper)
         {
             _repo = repo;
             _mapper = mapper;
@@ -29,12 +30,12 @@ namespace MobiBooking.Services
 
         public int Add(ReservationDto b)
         {
-            return _repo.Add(_mapper.Map<ReservationDto>(b));
+            return _repo.Add(_mapper.Map<Reservation>(b));
         }
 
         public int Update(int id, ReservationDto b)
         {
-            return _repo.Update(id, _mapper.Map<ReservationDto>(b));
+            return _repo.Update(id, _mapper.Map<Reservation>(b));
         }
 
         public int Delete(int id)

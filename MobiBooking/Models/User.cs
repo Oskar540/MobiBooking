@@ -30,6 +30,7 @@ namespace MobiBooking.Models
         public PropStatus Status { get; set; }
 
         public List<Reservation> Reservations { get; set; }
+        public List<Reservation> Invitings { get; set; }
 
         public double MeetingsCurrentWeek { get; set; }
         public double MeetingsPastWeek { get; set; }
@@ -46,13 +47,13 @@ namespace MobiBooking.Models
             Reservations.Add(reservation);
         }
 
-        public void CurrentWeek(User user)
+        public void ActualizeWeekMonthStatistics(User user)
         {
             DateTime startOfWeek = DateTime.Today.AddDays((int)(DateTime.Today.DayOfWeek) * -1).AddDays(1);
             DateTime endOfWeek = startOfWeek.AddDays(6);
 
             
-            var stats = foo(startOfWeek, endOfWeek, user);
+            var stats = CalculateDashboardStats(startOfWeek, endOfWeek, user);
 
             user.ReservationCurrentWeek = stats.Item1;
             user.MeetingsCurrentWeek = stats.Item2;
@@ -61,7 +62,7 @@ namespace MobiBooking.Models
             DateTime pastStartWeek = startOfWeek.AddDays(-7);
             DateTime pastEndWeek = startOfWeek.AddDays(-1);
 
-            stats = foo(pastStartWeek, pastEndWeek, user);
+            stats = CalculateDashboardStats(pastStartWeek, pastEndWeek, user);
 
             user.ReservationPastWeek = stats.Item1;
             user.MeetingsPastWeek = stats.Item2;
@@ -70,7 +71,7 @@ namespace MobiBooking.Models
             DateTime StartMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             DateTime EndMonth = StartMonth.AddMonths(1).AddTicks(-1);
 
-            stats = foo(StartMonth, EndMonth, user);
+            stats = CalculateDashboardStats(StartMonth, EndMonth, user);
 
             user.ReservationCurrentMonth = stats.Item1;
             user.MeetingsCurrentMonth = stats.Item2;
@@ -79,19 +80,23 @@ namespace MobiBooking.Models
             DateTime PastStartMonth = StartMonth.AddMonths(-1);
             DateTime PastEndMonth = EndMonth.AddMonths(1).AddTicks(-1);
 
-            stats = foo(PastStartMonth, PastEndMonth, user);
+            stats = CalculateDashboardStats(PastStartMonth, PastEndMonth, user);
 
             user.ReservationPastMonth = stats.Item1;
             user.MeetingsPastMonth = stats.Item2;
         }
 
-        private Tuple<int, double> foo(DateTime startDate, DateTime endDate, User user)
+        private Tuple<int, double> CalculateDashboardStats(DateTime startDate, DateTime endDate, User user)
         {
             int days = new int();
             double hours = new double();
             List<Reservation> tempReservationsList = new List<Reservation>();
 
-            //sprawdza ktore rejestracje sali mieszczą się w obecnym miesiącu początek lub koniec
+            if(user.Reservations == null)
+            {
+                return new Tuple<int, double>(12, 12.34);
+            }
+            //sprawdza ktore rejestracje sali mieszczą się pomiędzy datami
             foreach (var item in user.Reservations)
             {
                 if ((item.From >= startDate && item.From <= endDate) ||
@@ -105,13 +110,13 @@ namespace MobiBooking.Models
             {
                 int daysOfReservation = (item.To - item.From).Days + 1;
 
-                //odcięcie dni przed poprzednim tygodniem z rezerwacji
+                //odcięcie dni przed zakresem
                 if (item.From < startDate)
                 {
                     daysOfReservation -= (startDate - item.From).Days;
                 }
 
-                //odcięcie dni po poprzednim tygodniu z rezerwacji
+                //odcięcie dni po zakresie
                 if (item.To > endDate)
                 {
                     daysOfReservation -= (item.To - endDate).Days;

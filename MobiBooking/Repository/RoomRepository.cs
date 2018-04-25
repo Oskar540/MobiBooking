@@ -11,7 +11,6 @@ namespace MobiBooking.Models.Repository
         public RoomRepository(BookingDbContext db)
         {
             _db = db;
-
         }
 
         public int Add(Room b)
@@ -50,19 +49,29 @@ namespace MobiBooking.Models.Repository
             return _db.Rooms.OrderBy(c => c.Name);
         }
 
-        public int Update(int id, Room b)
+        public int Update(int id, Room item)
         {
+            var room = _db.Rooms.FirstOrDefault(c => c.Id == id);
+            if (room == null)
+            {
+                throw new HttpResponseException(404, "Can't find room with this identifier!");
+            }
             try
             {
-                b.Id = id;
-                _db.Rooms.Attach(b);
+                room.Name = item.Name;
+                room.EtimeOption = item.EtimeOption;
+                room.Localization = item.Localization;
+                room.IsActive = item.IsActive;
+                room.Capacity = item.Capacity;
+                room.IsReserved = item.IsReserved;
+                room.EbookStatus = item.EbookStatus;
                 _db.SaveChanges();
             }
             catch
             {
                 throw new HttpResponseException(400, "Invalid sended data!");
             }
-            return b.Id;
+            return room.Id;
         }
     }
 }
