@@ -23,15 +23,14 @@ namespace MobiBooking.Models.Repository
 
         public int Delete(int id)
         {
-            try
-            {
-                _db.Rooms.Remove(new Room() { Id = id });
-                _db.SaveChanges();
-            }
-            catch
+            var room = _db.Rooms.FirstOrDefault(c => c.Id == id);
+            if(room == null)
             {
                 throw new HttpResponseException(404, "Can't find room with this identifier!");
             }
+            _db.Rooms.Remove(room);
+            _db.SaveChanges();
+            
             return id;
         }
 
@@ -42,6 +41,7 @@ namespace MobiBooking.Models.Repository
             {
                 throw new HttpResponseException(404, "Can't find room with this identifier!");
             }
+
             return room;
         }
 

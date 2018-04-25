@@ -11,9 +11,10 @@ using System;
 namespace MobiBooking.Migrations
 {
     [DbContext(typeof(BookingDbContext))]
-    partial class BookingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180425093903_DeletedStats")]
+    partial class DeletedStats
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -245,26 +246,10 @@ namespace MobiBooking.Migrations
                     b.Property<string>("Login")
                         .IsRequired();
 
-                    b.Property<double>("MeetingsCurrentMonth");
-
-                    b.Property<double>("MeetingsCurrentWeek");
-
-                    b.Property<double>("MeetingsPastMonth");
-
-                    b.Property<double>("MeetingsPastWeek");
-
                     b.Property<string>("Name");
 
                     b.Property<string>("Password")
                         .IsRequired();
-
-                    b.Property<int>("ReservationCurrentMonth");
-
-                    b.Property<int>("ReservationCurrentWeek");
-
-                    b.Property<int>("ReservationPastMonth");
-
-                    b.Property<int>("ReservationPastWeek");
 
                     b.Property<int>("Status");
 

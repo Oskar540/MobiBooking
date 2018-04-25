@@ -9,7 +9,6 @@ namespace MobiBooking.DTO
     {
         public int Id { get; set; }
         public RoomDto Room { get; set; }
-        public List<UserDto> Members { get; set; }
         public DateTime From { get; set; }
         public DateTime To { get; set; }
         public ExtraExuipment ExtraEquip { get; set; }

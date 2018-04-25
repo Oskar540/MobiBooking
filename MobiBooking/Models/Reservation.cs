@@ -9,7 +9,6 @@ namespace MobiBooking.Models
     {
         public int Id { get; set; }
         public Room Room { get; set; }
-        public List<User> Members { get; set; }
         public DateTime From { get; set; }
         public DateTime To { get; set; }
         public ExtraEquipment ExtraEquip { get; set; }
