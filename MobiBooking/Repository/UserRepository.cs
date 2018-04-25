@@ -11,7 +11,7 @@ namespace MobiBooking.Models.Repository
 
         public UserRepository(BookingDbContext db)
         {
-            _db = db ?? throw new HttpResponseException(503, "Issue with connect to DataBase Context");
+            _db = db;
         }
 
         public IEnumerable<User> GetAll()

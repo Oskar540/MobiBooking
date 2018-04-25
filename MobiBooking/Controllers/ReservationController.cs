@@ -16,7 +16,7 @@ namespace MobiBooking.Controllers
 
         public ReservationController(IDefaultRepository<ReservationDto> repo)
         {
-            _repo = repo ?? throw new HttpResponseException(503, "Issue with connect to repository");
+            _repo = repo;
         }
 
         // GET: api/Reservation

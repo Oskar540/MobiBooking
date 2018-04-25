@@ -16,8 +16,8 @@ namespace MobiBooking.Models.Repository
 
         public TokenRepository(BookingDbContext db, IConfiguration config)
         {
-            _db = db ?? throw new HttpResponseException(503, "Issue with connect to DataBase Context");
-            _config = config ?? throw new HttpResponseException(503, "Issue with connect to Configuration");
+            _db = db;
+            _config = config;
         }
 
         public User Create(User login)

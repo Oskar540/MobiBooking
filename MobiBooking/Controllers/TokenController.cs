@@ -17,7 +17,7 @@ namespace MobiBooking.Controllers
 
         public TokenController(ITokenRepository<UserDto> repo)
         {
-            _repo = repo ?? throw new HttpResponseException(503, "Issue with connect to repository");
+            _repo = repo;
         }
 
         [HttpPost]

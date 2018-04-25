@@ -13,8 +13,8 @@ namespace MobiBooking.Services
 
         public ReservationService(IDefaultRepository<ReservationDto> repo, IMapper mapper)
         {
-            _repo = repo ?? throw new HttpResponseException(503, "Issue with connect to repository");
-            _mapper = mapper ?? throw new HttpResponseException(503, "Issue with connect to automapper");
+            _repo = repo;
+            _mapper = mapper;
         }
 
         public IEnumerable<ReservationDto> GetAll()

@@ -10,7 +10,7 @@ namespace MobiBooking.Models.Repository
 
         public RoomRepository(BookingDbContext db)
         {
-            _db = db ?? throw new HttpResponseException(503, "Issue with connect to DataBase Context");
+            _db = db;
 
         }
 
