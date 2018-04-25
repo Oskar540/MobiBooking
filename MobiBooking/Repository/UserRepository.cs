@@ -44,6 +44,10 @@ namespace MobiBooking.Models.Repository
         public int Update(int id, User item)
         {
             var user = _db.Users.FirstOrDefault(c => c.Id == id);
+            if(user == null)
+            {
+                throw new HttpResponseException(404, "Can't find user by this identifier!");
+            }
             try
             {
                 user.Login = item.Login;

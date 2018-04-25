@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using MobiBooking.DTO;
-using MobiBooking.Exceptions;
+using MobiBooking.Exceptons;
 using MobiBooking.IdentityModels;
 using MobiBooking.Models;
 using MobiBooking.Models.Repository;

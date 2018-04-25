@@ -24,28 +24,26 @@ namespace MobiBooking.Repository
 
         public int Delete(int id)
         {
-            try
-            {
-                _db.Reservations.Remove(new Reservation() { Id = id });
-                _db.SaveChanges();
-            }
-            catch
+            var reservation = _db.Reservations.FirstOrDefault(c => c.Id == id);
+            if(reservation == null)
             {
                 throw new HttpResponseException(404, "Can't find reservation with this identifier!");
-
             }
+            _db.Reservations.Remove(reservation);
+            _db.SaveChanges();
+
             return id;
         }
 
         public Reservation Get(int id)
         {
-            var res = _db.Reservations.FirstOrDefault(c => c.Id == id);
-            if(res == null)
+            var reservation = _db.Reservations.FirstOrDefault(c => c.Id == id);
+            if(reservation == null)
             {
                 throw new HttpResponseException(404, "Can't find reservation with this identifier!");
 
             }
-            return res;
+            return reservation;
         }
 
         public IEnumerable<Reservation> GetAll()
