@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using MobiBooking.DTO;
-using MobiBooking.Exceptions;
 using MobiBooking.Models;
 using MobiBooking.Models.Repository;
 using System.Collections.Generic;
@@ -18,9 +17,9 @@ namespace MobiBooking.Services
             _mapper = mapper;
         }
 
-        public IEnumerable<ReservationDto> GetAll()
+        public IEnumerable<ReservationDto> GetAll(string param)
         {
-            return _mapper.Map<IEnumerable<ReservationDto>>(_repo.GetAll());
+            return _mapper.Map<IEnumerable<ReservationDto>>(_repo.GetAll(param));
         }
 
         public ReservationDto Get(int id)

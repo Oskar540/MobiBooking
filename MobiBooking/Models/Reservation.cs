@@ -14,5 +14,24 @@ namespace MobiBooking.Models
         public ExtraEquipment ExtraEquip { get; set; }
         public string Title { get; set; }
         public bool IsCycled { get; set; } = false;
+
+        public bool CheckIfCycledOrEnd(Reservation res)
+        {
+            if(res.To >= DateTime.Now)
+            {
+                if(IsCycled)
+                {
+                    var diff = (res.To - res.From).Days;
+                    res.From = res.To;
+                    res.To = res.To.AddDays(diff);
+                }
+                else
+                {
+                    res = null;
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }

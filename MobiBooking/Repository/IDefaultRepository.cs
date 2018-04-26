@@ -4,7 +4,7 @@ namespace MobiBooking.Models.Repository
 {
     public interface IDefaultRepository<Type>
     {
-        IEnumerable<Type> GetAll();
+        IEnumerable<Type> GetAll(string param);
 
         Type Get(int id);
 

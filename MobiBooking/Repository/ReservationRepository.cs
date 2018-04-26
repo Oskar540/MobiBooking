@@ -40,6 +40,10 @@ namespace MobiBooking.Repository
         public Reservation Get(int id)
         {
             var reservation = _db.Reservations.FirstOrDefault(c => c.Id == id);
+            if(!reservation.CheckIfCycledOrEnd(reservation))
+            {
+                _db.Reservations.Remove(reservation);
+            }
             if(reservation == null)
             {
                 throw new HttpResponseException(404, "Can't find reservation with this identifier!");
@@ -48,9 +52,10 @@ namespace MobiBooking.Repository
             return reservation;
         }
 
-        public IEnumerable<Reservation> GetAll()
+        public IEnumerable<Reservation> GetAll(string param)
         {
-            return _db.Reservations.OrderBy(c => c.From);
+            var propertyInfo = typeof(Reservation).GetProperty(param);
+            return _db.Reservations.OrderBy(c => propertyInfo.GetValue(c, null));
         }
 
         public int Update(int id, Reservation item)

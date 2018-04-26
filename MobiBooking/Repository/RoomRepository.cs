@@ -44,9 +44,10 @@ namespace MobiBooking.Models.Repository
             return room;
         }
 
-        public IEnumerable<Room> GetAll()
+        public IEnumerable<Room> GetAll(string param)
         {
-            return _db.Rooms.OrderBy(c => c.Name);
+            var propertyInfo = typeof(Room).GetProperty(param);
+            return _db.Rooms.OrderBy(c => propertyInfo.GetValue(c, null));
         }
 
         public int Update(int id, Room item)

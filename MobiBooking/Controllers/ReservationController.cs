@@ -21,9 +21,9 @@ namespace MobiBooking.Controllers
 
         // GET: api/Reservation
         [HttpGet]
-        public IEnumerable<ReservationDto> Get()
+        public IEnumerable<ReservationDto> Get(string param)
         {
-            return _repo.GetAll();
+            return _repo.GetAll(param);
         }
 
         // GET: api/Reservation/5

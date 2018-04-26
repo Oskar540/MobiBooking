@@ -18,9 +18,9 @@ namespace MobiBooking.Services
             _mapper = mapper;
         }
 
-        public IEnumerable<UserDto> GetAll()
+        public IEnumerable<UserDto> GetAll(string param)
         {
-            return _mapper.Map<IEnumerable<UserDto>>(_repo.GetAll());
+            return _mapper.Map<IEnumerable<UserDto>>(_repo.GetAll(param));
         }
 
         public UserDto Get(int id)

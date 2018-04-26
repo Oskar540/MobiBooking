@@ -21,9 +21,9 @@ namespace MobiBooking.Controllers
 
         // GET: api/Rooms
         [HttpGet]
-        public IEnumerable<RoomDto> GetRooms()
+        public IEnumerable<RoomDto> GetRooms(string param)
         {
-            return _repo.GetAll();
+            return _repo.GetAll(param);
         }
 
         // GET: api/Rooms/5

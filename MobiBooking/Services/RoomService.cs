@@ -33,9 +33,9 @@ namespace MobiBooking.Services
             return _mapper.Map<RoomDto>(_repo.Get(id));
         }
 
-        public IEnumerable<RoomDto> GetAll()
+        public IEnumerable<RoomDto> GetAll(string param)
         {
-            return _mapper.Map<IEnumerable<RoomDto>>(_repo.GetAll());
+            return _mapper.Map<IEnumerable<RoomDto>>(_repo.GetAll(param));
         }
 
         public int Update(int id, RoomDto b)

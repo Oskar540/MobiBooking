@@ -14,9 +14,10 @@ namespace MobiBooking.Models.Repository
             _db = db;
         }
 
-        public IEnumerable<User> GetAll()
+        public IEnumerable<User> GetAll(string param)
         {
-            return _db.Users.OrderBy(c => c.Lastname);
+            var propertyInfo = typeof(User).GetProperty(param);
+            return _db.Users.OrderBy(c => propertyInfo.GetValue(c, null));
         }
 
         public User Get(int id)
@@ -57,6 +58,7 @@ namespace MobiBooking.Models.Repository
                 user.Name = item.Name;
                 user.Lastname = item.Lastname;
                 user.Email = item.Email;
+                user.Phone = item.Phone;
                 user.Status = item.Status;
                 _db.SaveChanges();
             }
