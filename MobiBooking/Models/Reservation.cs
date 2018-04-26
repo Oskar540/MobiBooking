@@ -11,18 +11,20 @@ namespace MobiBooking.Models
         public Room Room { get; set; }
         public DateTime From { get; set; }
         public DateTime To { get; set; }
+        public List<User> Members { get; set; }
         public ExtraEquipment ExtraEquip { get; set; }
         public string Title { get; set; }
         public bool IsCycled { get; set; } = false;
+        public User Owner { get; set; }
 
         public bool CheckIfCycledOrEnd(Reservation res)
         {
-            if(res.To >= DateTime.Now)
+            if(res.To <= DateTime.Now)
             {
                 if(IsCycled)
                 {
                     var diff = (res.To - res.From).Days;
-                    res.From = res.To;
+                    res.From = /*res.To*/ DateTime.Now;
                     res.To = res.To.AddDays(diff);
                 }
                 else

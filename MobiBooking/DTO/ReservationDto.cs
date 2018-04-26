@@ -11,8 +11,10 @@ namespace MobiBooking.DTO
         public RoomDto Room { get; set; }
         public DateTime From { get; set; }
         public DateTime To { get; set; }
+        public List<UserDto> Members { get; set; }
         public ExtraEquipment ExtraEquip { get; set; }
         public string Title { get; set; }
         public bool IsCycled { get; set; } = false;
+        public UserDto Owner { get; set; }
     }
 }

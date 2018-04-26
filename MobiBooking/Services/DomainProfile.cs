@@ -10,6 +10,7 @@ namespace MobiBooking.Services
         {
             CreateMap<User, UserDto>().ReverseMap();
             CreateMap<Room, RoomDto>().ReverseMap();
+            CreateMap<Reservation, ReservationDto>().ReverseMap();
         }
     }
 }

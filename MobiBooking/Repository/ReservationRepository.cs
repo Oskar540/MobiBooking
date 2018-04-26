@@ -40,11 +40,15 @@ namespace MobiBooking.Repository
         public Reservation Get(int id)
         {
             var reservation = _db.Reservations.FirstOrDefault(c => c.Id == id);
+            //reservation.Room is null get room for reservation by Id of room
             if(!reservation.CheckIfCycledOrEnd(reservation))
             {
                 _db.Reservations.Remove(reservation);
+                reservation = null;
             }
-            if(reservation == null)
+            _db.SaveChanges();
+
+            if (reservation == null)
             {
                 throw new HttpResponseException(404, "Can't find reservation with this identifier!");
             }
